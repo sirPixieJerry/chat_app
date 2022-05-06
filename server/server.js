@@ -1,16 +1,32 @@
+// REQUIRE PACKAGES AND FILES:
+
+// require express
 const express = require("express");
-const app = express();
+// require compression
 const compression = require("compression");
+// require path
 const path = require("path");
 
-app.use(compression());
+// SERVER SETUP:
 
+// start the server
+const app = express();
+// choose the port
+const PORT = process.env.PORT || 3001;
+
+// MIDDLEWARE SETUP
+// compresses th response
+app.use(compression());
+// serve static files in /public
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+
+// ROUTES:
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
-    console.log("I'm listening.");
+// server listening to chosen port
+app.listen(PORT, function () {
+    console.log(`I'm listening to ${PORT}...`);
 });
