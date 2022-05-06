@@ -26,6 +26,8 @@ const PORT = process.env.PORT || 3001;
 app.use(compression());
 // serve static files in /public
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
+// setup middleware to populate req.body with form data
+app.use(express.urlencoded({ extended: false }));
 // setup cookie-session
 app.use(
     cookieSession({
