@@ -13,7 +13,7 @@ if (process.env.DATABASE_URL) {
 } else {
     // the app runs locally
     db = spicedPg(
-        spicedPg(`postgres:${DB_USER}:${DB_PASSWORD}@localhost:5432/${DB_NAME}`)
+        `postgres:${DB_USER}:${DB_PASSWORD}@localhost:5432/${DB_NAME}`
     );
     console.log(`[db] Connecting to: ${DB_NAME}`);
 }

@@ -4,22 +4,23 @@ export default class Registration extends Component {
     constructor() {
         super();
         this.state = {};
+
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(evt) {
+    handleChange(e) {
         this.setState(
             {
-                [evt.target.name]: evt.target.value,
+                [e.target.name]: e.target.value,
             },
             () => console.log(this.state)
         );
     }
 
-    handleSubmit(evt) {
-        evt.preventDefault();
-        console.log("USER TRIED TO SUBMIT!");
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log("USER TRIED TO SUBMIT");
         fetch("/register", {
             method: "POST",
             headers: {
@@ -40,37 +41,34 @@ export default class Registration extends Component {
     render() {
         return (
             <>
-                <h1>This is a registration component.</h1>
-                {/* react equivalent to v-if in vue*/}
-                {this.state.error && <p>Something went wrong!</p>}
+                <h1>Registration Component</h1>
+                {this.state.error && <p>Oops, something went wrong!</p>}
                 <form onSubmit={this.handleSubmit}>
                     <input
                         onChange={this.handleChange}
                         type="text"
                         name="first_name"
-                        placeholder="Enter First Name..."
+                        placeholder="First Name"
                     />
                     <input
+                        onChange={this.handleChange}
                         type="text"
                         name="last_name"
-                        placeholder="Enter Last Name..."
+                        placeholder="Last Name"
                     />
                     <input
+                        onChange={this.handleChange}
                         type="email"
                         name="email"
-                        placeholder="Enter Email..."
+                        placeholder="Email Address"
                     />
                     <input
+                        onChange={this.handleChange}
                         type="password"
                         name="password"
-                        placeholder="Enter Password..."
+                        placeholder="Password"
                     />
-                    <input
-                        type="password"
-                        name="password_repeat"
-                        placeholder="Repeat Password..."
-                    />
-                    <button>submit</button>
+                    <button>Submit</button>
                 </form>
             </>
         );

@@ -13,6 +13,8 @@ const secret =
     process.env.NODE_ENV == "production"
         ? process.env
         : require("../config.json");
+// require db.js functions
+const { addUser } = require("../sql/db");
 
 // SERVER SETUP:
 
@@ -22,6 +24,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // MIDDLEWARE SETUP
+// setup to receive and parse JSON files
+app.use(express.json());
 // compresses th response
 app.use(compression());
 // serve static files in /public
@@ -47,6 +51,19 @@ app.use(function (req, res, next) {
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+});
+
+// POST register user
+app.post("/register", (req, res) => {
+    console.log("data from registration from: ", req.body);
+    addUser(req.body)
+        .then((rows) => {
+            req.session.id = rows.id;
+        })
+        .catch((err) => {
+            res.status(400);
+            console.log(err);
+        });
 });
 
 // server listening to chosen port
