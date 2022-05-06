@@ -1,7 +1,7 @@
-// require bycrypt module to hash passwords
-const bcrypt = require("bcryptjs");
 // require spiced-pg
 const spicedPg = require("spiced-pg");
+// require bycrypt functionality
+const { hashPassword, matchPassword } = require("./bycrypt");
 // require credentials from config.json
 const { DB_USER, DB_PASSWORD, DB_NAME } = require("../config.json");
 
@@ -17,11 +17,6 @@ if (process.env.DATABASE_URL) {
     );
     console.log(`[db] Connecting to: ${DB_NAME}`);
 }
-
-// function to hash passwords ❌
-const hashPassword = function (password) {
-    return bcrypt.genSalt().then((salt) => bcrypt.hash(password, salt));
-};
 
 // function to add a new user to the users table ❌
 module.exports.addUser = ({ first_name, last_name, email, password }) => {
