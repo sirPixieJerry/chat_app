@@ -29,7 +29,10 @@ module.exports.addUser = ({ first_name, last_name, email, password }) => {
                 [first_name, last_name, email, password_hash]
             )
             .then((result) => result.rows[0])
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                throw err;
+            });
     });
 };
 
@@ -48,5 +51,8 @@ module.exports.loginUser = ({ email, password }) => {
             const { id, password_hash } = result.rows[0];
             return matchPassword(password, password_hash, id);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+            console.log(err);
+            throw err;
+        });
 };

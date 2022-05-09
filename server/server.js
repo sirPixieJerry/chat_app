@@ -49,8 +49,10 @@ app.use(function (req, res, next) {
 
 // ROUTES:
 
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+app.get("/user/id.json", (req, res) => {
+    // make sure that even if there is no cookie there is
+    // a valid json with "|| null"!
+    res.json(req.session.user_id || null);
 });
 
 // POST register request
@@ -59,10 +61,11 @@ app.post("/register", (req, res) => {
     addUser(req.body)
         .then((rows) => {
             req.session.id = rows.id;
+            console.log(req.session);
         })
         .catch((err) => {
             res.status(400);
-            console.log(err);
+            return err;
         });
 });
 
@@ -79,8 +82,13 @@ app.post("/login", (req, res) => {
         })
         .catch((err) => {
             res.status(400);
-            console.log(err);
+            return err;
         });
+});
+
+// always last
+app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
 // server listening to chosen port

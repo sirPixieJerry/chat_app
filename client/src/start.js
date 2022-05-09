@@ -1,24 +1,16 @@
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
 
-// const elem = (
-//     <>
-//         <Welcome />
-//     </>
-// );
-
 fetch("/user/id.json")
     .then((res) => res.json())
-    .then((data) => {
-        if (!data.user_id) {
+    .then((user_id) => {
+        if (!user_id) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             ReactDOM.render(
-                // <img src="./logo.jpg" />,
+                <h1>I MIGHT BECOME A LOGO</h1>,
                 document.querySelector("main")
             );
         }
     })
     .catch((err) => console.log(err));
-
-// ReactDOM.render(elem, document.querySelector("main"));

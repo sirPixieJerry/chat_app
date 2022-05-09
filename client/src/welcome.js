@@ -8,16 +8,13 @@ export default function Welcome() {
             <h1>Welcome to my social network!</h1>
             {/* some kind of cool logo */}
             <BrowserRouter>
-                <div>
-                    <Route exact path="/">
-                        <Registration />
-                    </Route>
-                    <Route exact path="/login">
-                        <Login />
-                    </Route>
-                </div>
+                <Route exact path="/">
+                    <Registration />
+                </Route>
+                <Route exact path="/login">
+                    <Login />
+                </Route>
             </BrowserRouter>
-            <Registration />
         </section>
     );
 }

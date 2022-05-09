@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, BrowserRouter, Route } from "react-router-dom";
 
 export default class Login extends Component {
     constructor() {
@@ -57,7 +57,9 @@ export default class Login extends Component {
                     />
                     <button>SUBMIT</button>
                 </form>
-                <Link to="/register">Click here to Register!</Link>
+                <BrowserRouter>
+                    <Link to="/register">Click here to Register!</Link>
+                </BrowserRouter>
             </>
         );
     }

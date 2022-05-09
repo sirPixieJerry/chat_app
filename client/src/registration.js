@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, BrowserRouter, Route } from "react-router-dom";
 
 export default class Registration extends Component {
     constructor() {
@@ -31,8 +31,11 @@ export default class Registration extends Component {
         })
             .then((res) => res.json())
             .then((result) => {
+                if (!result.success) {
+                    this.setState({ error: true });
+                }
                 // if something goes wrong => render an error
-                // if all goes to plan, refresh the page
+                location.replace("/"); // maybe window.location.replace // lookup reload() and replace()
             })
             .catch((err) => {
                 // if something goes wrong => render an error
@@ -71,7 +74,9 @@ export default class Registration extends Component {
                     />
                     <button>Submit</button>
                 </form>
-                <Link to="/login">Click here to Login!</Link>
+                <BrowserRouter>
+                    <Link to="/login">Click here to Login!</Link>
+                </BrowserRouter>
             </>
         );
     }
