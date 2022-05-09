@@ -88,6 +88,12 @@ app.post("/login", (req, res) => {
         });
 });
 
+// GET logout request
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.json({ success: true });
+});
+
 // always last
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
