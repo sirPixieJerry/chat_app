@@ -19,7 +19,7 @@ if (process.env.DATABASE_URL) {
 }
 
 // function to add a new user to the users table
-module.exports.addUser = ({ first_name, last_name, email, password }) => {
+function addUser({ first_name, last_name, email, password }) {
     return hashPassword(password).then((password_hash) => {
         return db
             .query(
@@ -34,10 +34,10 @@ module.exports.addUser = ({ first_name, last_name, email, password }) => {
                 throw err;
             });
     });
-};
+}
 
 // function to login user
-module.exports.loginUser = ({ email, password }) => {
+function loginUser({ email, password }) {
     console.log("db received:", email, password);
     return db
         .query(
@@ -56,4 +56,8 @@ module.exports.loginUser = ({ email, password }) => {
             console.log(err);
             throw err;
         });
-};
+}
+
+// function createPasswordResetCode()
+
+module.exports = { loginUser, addUser };
