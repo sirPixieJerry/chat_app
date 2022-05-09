@@ -38,6 +38,7 @@ module.exports.addUser = ({ first_name, last_name, email, password }) => {
 
 // function to login user
 module.exports.loginUser = ({ email, password }) => {
+    console.log("db received:", email, password);
     return db
         .query(
             `SELECT id, password_hash FROM users 

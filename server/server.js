@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 // setup cookie-session
 app.use(
     cookieSession({
-        name: "petition",
+        name: "social-network-session",
         secret: secret.secret,
         maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true,
@@ -52,16 +52,15 @@ app.use(function (req, res, next) {
 app.get("/user/id.json", (req, res) => {
     // make sure that even if there is no cookie there is
     // a valid json with "|| null"!
-    res.json(req.session.user_id || null);
+    res.json(req.session.id || null);
 });
 
 // POST register request
 app.post("/register", (req, res) => {
-    console.log("data from registration from: ", req.body);
     addUser(req.body)
         .then((rows) => {
             req.session.id = rows.id;
-            console.log(req.session);
+            res.json({ success: true });
         })
         .catch((err) => {
             res.status(400);
@@ -71,13 +70,16 @@ app.post("/register", (req, res) => {
 
 // POST login request
 app.post("/login", (req, res) => {
+    console.log("login req done!", req.body);
     loginUser(req.body)
         .then((arg) => {
             if (arg == null) {
-                // tell user login failed
+                res.json({ success: false });
+                console.log("failed!");
             } else {
+                console.log("logged in!", arg);
                 req.session.id = arg;
-                // redirect to logo
+                res.json({ success: true });
             }
         })
         .catch((err) => {

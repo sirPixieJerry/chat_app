@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, BrowserRouter, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Login extends Component {
     constructor() {
@@ -21,20 +21,27 @@ export default class Login extends Component {
 
     handleLogin(evt) {
         evt.preventDefault();
-        console.log("USER TRIED TO LOGIN!");
+        console.log("USER TRIED TO LOGIN!", this.state);
         fetch("/login", {
             method: "POST",
             headers: {
-                "Content-Type": "applictaion/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(this.state),
         })
             .then((res) => res.json())
-            .then((data) => {
-                // if something goes wrong => render an error
-                // if all goes to plan, refresh the page
+            .then((result) => {
+                if (!result.success) {
+                    this.setState({ error: true });
+                } else {
+                    console.log("let me in!");
+                    location.replace("/"); // lookup reload() and replace()
+                }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                this.setState({ error: true });
+                console.log(err);
+            });
     }
 
     render() {
@@ -48,18 +55,20 @@ export default class Login extends Component {
                         type="email"
                         name="email"
                         placeholder="Enter your Email..."
+                        required
                     />
                     <input
                         onChange={this.handleChange}
                         type="password"
                         name="password"
                         placeholder="Enter Password"
+                        required
                     />
                     <button>SUBMIT</button>
                 </form>
-                <BrowserRouter>
-                    <Link to="/register">Click here to Register!</Link>
-                </BrowserRouter>
+                <p>
+                    Click <Link to="/">here</Link> to register!
+                </p>
             </>
         );
     }

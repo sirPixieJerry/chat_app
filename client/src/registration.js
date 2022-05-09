@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, BrowserRouter, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class Registration extends Component {
     constructor() {
@@ -33,12 +33,13 @@ export default class Registration extends Component {
             .then((result) => {
                 if (!result.success) {
                     this.setState({ error: true });
+                } else {
+                    location.reload(); // lookup reload() and replace()
                 }
-                // if something goes wrong => render an error
-                location.replace("/"); // maybe window.location.replace // lookup reload() and replace()
             })
             .catch((err) => {
-                // if something goes wrong => render an error
+                this.setState({ error: true });
+                console.log(err);
             });
     }
 
@@ -53,30 +54,41 @@ export default class Registration extends Component {
                         type="text"
                         name="first_name"
                         placeholder="First Name"
+                        required
                     />
                     <input
                         onChange={this.handleChange}
                         type="text"
                         name="last_name"
                         placeholder="Last Name"
+                        required
                     />
                     <input
                         onChange={this.handleChange}
                         type="email"
                         name="email"
                         placeholder="Email Address"
+                        required
                     />
                     <input
                         onChange={this.handleChange}
                         type="password"
                         name="password"
                         placeholder="Password"
+                        required
+                    />
+                    <input
+                        onChange={this.handleChange}
+                        type="password"
+                        name="password_repeat"
+                        placeholder="Password"
+                        required
                     />
                     <button>Submit</button>
                 </form>
-                <BrowserRouter>
-                    <Link to="/login">Click here to Login!</Link>
-                </BrowserRouter>
+                <p>
+                    Click <Link to="/login">here</Link> to login!
+                </p>
             </>
         );
     }
