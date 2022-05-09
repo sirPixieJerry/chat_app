@@ -11,10 +11,6 @@ export default class Logout extends Component {
         fetch("/logout").then(location.replace("/"));
     }
     render() {
-        return (
-            <>
-                <button onClick={this.handleLogout}>logout</button>
-            </>
-        );
+        return <button onClick={this.handleLogout}>logout</button>;
     }
 }

@@ -8,13 +8,15 @@ const compression = require("compression");
 const path = require("path");
 // require cookie-session
 const cookieSession = require("cookie-session");
+// require crypto random string
+const cryptoRandomString = require("crypto-random-string");
 // require the secret
 const secret =
     process.env.NODE_ENV == "production"
         ? process.env
         : require("../config.json");
 // require db.js functions
-const { addUser, loginUser } = require("../sql/db");
+const { addUser, loginUser, createPasswordResetCode } = require("../sql/db");
 
 // SERVER SETUP:
 
@@ -86,6 +88,23 @@ app.post("/login", (req, res) => {
             res.status(400);
             return err;
         });
+});
+
+// function to send code via email 🔴
+function sendEmailWithCode({ email, code }) {
+    console.log("[social:email] sending email with code", email, code);
+    // here you'll put the SES stuff
+}
+
+// POST password reset request 🔴
+app.post("/api/password", (req, res) => {
+    const code = cryptoRandomString({ length: 6, type: "distinguishable" });
+    const email = req.body.email;
+    createPasswordResetCode({ email, code }).then((rows) => {
+        const { email, code } = rows[0];
+        sendEmailWithCode({ email, code });
+        res.json({ message: "ok" });
+    });
 });
 
 // GET logout request
