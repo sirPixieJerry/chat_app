@@ -14,7 +14,7 @@ const secret =
         ? process.env
         : require("../config.json");
 // require db.js functions
-const { addUser } = require("../sql/db");
+const { addUser, loginUser } = require("../sql/db");
 
 // SERVER SETUP:
 
@@ -53,12 +53,29 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-// POST register user
+// POST register request
 app.post("/register", (req, res) => {
     console.log("data from registration from: ", req.body);
     addUser(req.body)
         .then((rows) => {
             req.session.id = rows.id;
+        })
+        .catch((err) => {
+            res.status(400);
+            console.log(err);
+        });
+});
+
+// POST login request
+app.post("/login", (req, res) => {
+    loginUser(req.body)
+        .then((arg) => {
+            if (arg == null) {
+                // tell user login failed
+            } else {
+                req.session.id = arg;
+                // redirect to logo
+            }
         })
         .catch((err) => {
             res.status(400);

@@ -18,7 +18,7 @@ if (process.env.DATABASE_URL) {
     console.log(`[db] Connecting to: ${DB_NAME}`);
 }
 
-// function to add a new user to the users table ❌
+// function to add a new user to the users table
 module.exports.addUser = ({ first_name, last_name, email, password }) => {
     return hashPassword(password).then((password_hash) => {
         return db
@@ -31,4 +31,22 @@ module.exports.addUser = ({ first_name, last_name, email, password }) => {
             .then((result) => result.rows[0])
             .catch((err) => console.log(err));
     });
+};
+
+// function to login user
+module.exports.loginUser = ({ email, password }) => {
+    return db
+        .query(
+            `SELECT id, password_hash FROM users 
+    WHERE email = $1`,
+            [email]
+        )
+        .then((result) => {
+            if (!result.rows[0]) {
+                return null;
+            }
+            const { id, password_hash } = result.rows[0];
+            return matchPassword(password, password_hash, id);
+        })
+        .catch((err) => console.log(err));
 };

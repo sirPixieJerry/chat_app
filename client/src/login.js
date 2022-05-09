@@ -1,13 +1,13 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class Registration extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.state = {};
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);
     }
 
     handleChange(evt) {
@@ -19,59 +19,45 @@ export default class Registration extends Component {
         );
     }
 
-    handleSubmit(evt) {
+    handleLogin(evt) {
         evt.preventDefault();
-        console.log("USER TRIED TO SUBMIT");
-        fetch("/register", {
+        console.log("USER TRIED TO LOGIN!");
+        fetch("/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "applictaion/json",
             },
             body: JSON.stringify(this.state),
         })
             .then((res) => res.json())
-            .then((result) => {
+            .then((data) => {
                 // if something goes wrong => render an error
                 // if all goes to plan, refresh the page
             })
-            .catch((err) => {
-                // if something goes wrong => render an error
-            });
+            .catch((err) => console.log(err));
     }
 
     render() {
         return (
             <>
-                <h1>Registration Component</h1>
+                <h1>LOGIN COMPONENT:</h1>
                 {this.state.error && <p>Oops, something went wrong!</p>}
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        onChange={this.handleChange}
-                        type="text"
-                        name="first_name"
-                        placeholder="First Name"
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="text"
-                        name="last_name"
-                        placeholder="Last Name"
-                    />
+                <form onSubmit={this.handleLogin}>
                     <input
                         onChange={this.handleChange}
                         type="email"
                         name="email"
-                        placeholder="Email Address"
+                        placeholder="Enter your Email..."
                     />
                     <input
                         onChange={this.handleChange}
                         type="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder="Enter Password"
                     />
-                    <button>Submit</button>
+                    <button>SUBMIT</button>
                 </form>
-                <Link to="/login">Click here to Login!</Link>
+                <Link to="/register">Click here to Register!</Link>
             </>
         );
     }
