@@ -10,3 +10,9 @@ body {
     font-family: Georgia, "Times New Roman", Times, serif;
     color: burlywood;
 }
+
+.avatar {
+    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
+    height: 100px;
+    width: 100px;
+}
