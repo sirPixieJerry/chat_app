@@ -60,7 +60,7 @@ app.use(function (req, res, next) {
     res.setHeader("x-frame-options", "deny");
     next();
 });
-// setup multer uploader (multer --> lookup documentation):🔴
+// setup multer uploader
 const storage = multer.diskStorage({
     // specify directory folder for temp uploads
     destination: (req, file, callback) => {
@@ -78,6 +78,11 @@ const storage = multer.diskStorage({
 });
 // specify multer middleware ready to use!
 const uploader = multer({ storage });
+// function to send code via email ❌
+function sendEmailWithCode({ email, code }) {
+    console.log("[social:email] sending email with code", email, code);
+    // here you'll put the SES stuff
+}
 
 // ROUTES:
 
@@ -120,13 +125,7 @@ app.post("/login", (req, res) => {
         });
 });
 
-// function to send code via email 🔴
-function sendEmailWithCode({ email, code }) {
-    console.log("[social:email] sending email with code", email, code);
-    // here you'll put the SES stuff
-}
-
-// POST password reset request 🔴
+// POST password reset request ❌
 app.post("/api/password", (req, res) => {
     const code = cryptoRandomString({ length: 6, type: "distinguishable" });
     const email = req.body.email;
@@ -137,14 +136,14 @@ app.post("/api/password", (req, res) => {
     });
 });
 
-// POST user info from database 🔴
+// GET user info from database request
 app.get("/api/users/me", (req, res) => {
     getUserInfo(req.session.id).then((rows) => {
         res.json(rows);
     });
 });
 
-// POST upload picture to upload folder then to s3 (upload) and serve it to main page🔴
+// POST upload picture to upload folder then to s3 (upload) and serve it to main page request
 app.post(
     "/api/users/me/upload-avatar",
     uploader.single("image"),
@@ -152,14 +151,12 @@ app.post(
     (req, res) => {
         // build data for data to pass it to the database
         const user_id = req.session.id;
-        console.log("USER ID: ", user_id);
         const imgName = req.file.filename;
         const url = `https://imageboard-spiced.s3.eu-central-1.amazonaws.com/${imgName}`;
         if (req.file) {
             // update database then serve the new image to the main page
             uploadImg(user_id, url)
                 .then((rows) => {
-                    console.log(rows);
                     res.json(rows);
                 })
                 .catch((err) => console.log(err));

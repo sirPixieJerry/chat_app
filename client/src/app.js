@@ -1,19 +1,23 @@
+// import Component from react:
 import { Component } from "react";
+// import components from files:
 import Logout from "./logout";
 import Avatar from "./avatar";
 import AvatarUpload from "./avatar-upload";
 
+// create class cmponent called App and export it
 export default class App extends Component {
     constructor() {
         super();
         this.state = {
             showModal: false,
         };
-        // methods that change values in state needs to be bind inside the constructor
+        // methods that change values in this.state need to be bind inside the constructor
         this.onProfileClick = this.onProfileClick.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
     }
+    // when app is loaded do:
     componentDidMount() {
         fetch("/api/users/me")
             .then((res) => res.json())
@@ -26,11 +30,9 @@ export default class App extends Component {
     onProfileClick() {
         // change the state by using .setState and the object({statename: value})!!!
         this.setState({ showModal: true });
-        console.log("OPEN!");
     }
     closeModal() {
         this.setState({ showModal: false });
-        console.log("CLOSE!");
     }
     onUpload(img_url) {
         this.setState({ showModal: false, profile_picture_url: img_url });

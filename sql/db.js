@@ -72,7 +72,7 @@ function uploadImg(user_id, url) {
 
 // function createPasswordResetCode()
 
-// function to get user info from database 🔴
+// function to get user info from database
 function getUserInfo(user_id) {
     return db
         .query(`SELECT * FROM users WHERE id = $1`, [user_id])
