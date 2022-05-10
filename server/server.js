@@ -16,7 +16,12 @@ const secret =
         ? process.env
         : require("../config.json");
 // require db.js functions
-const { addUser, loginUser, createPasswordResetCode } = require("../sql/db");
+const {
+    addUser,
+    loginUser,
+    createPasswordResetCode,
+    getUserInfo,
+} = require("../sql/db");
 
 // SERVER SETUP:
 
@@ -107,13 +112,20 @@ app.post("/api/password", (req, res) => {
     });
 });
 
+// POST user info from database 🔴
+app.get("/api/users/me", (req, res) => {
+    getUserInfo(req.session.id).then((rows) => {
+        res.json(rows);
+    });
+});
+
 // GET logout request
 app.get("/logout", (req, res) => {
     req.session = null;
     res.json({ success: true });
 });
 
-// always last
+// always last!
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

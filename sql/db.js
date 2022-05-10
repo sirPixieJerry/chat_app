@@ -38,7 +38,6 @@ function addUser({ first_name, last_name, email, password }) {
 
 // function to login user
 function loginUser({ email, password }) {
-    console.log("db received:", email, password);
     return db
         .query(
             `SELECT id, password_hash FROM users 
@@ -60,4 +59,14 @@ function loginUser({ email, password }) {
 
 // function createPasswordResetCode()
 
-module.exports = { loginUser, addUser };
+// function to get user info from database 🔴
+function getUserInfo(user_id) {
+    return db
+        .query(`SELECT * FROM users WHERE id = $1`, [user_id])
+        .then((result) => {
+            return result.rows[0];
+        })
+        .catch((err) => console.log(err));
+}
+
+module.exports = { loginUser, addUser, getUserInfo };

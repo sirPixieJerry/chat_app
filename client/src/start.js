@@ -1,13 +1,6 @@
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
-import Logout from "./logout";
-
-const content = (
-    <>
-        <h1>I MIGHT BECOME A LOGO</h1>
-        <Logout />
-    </>
-);
+import App from "./app";
 
 fetch("/user/id.json")
     .then((res) => res.json())
@@ -15,7 +8,7 @@ fetch("/user/id.json")
         if (!user_id) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
-            ReactDOM.render(content, document.querySelector("main"));
+            ReactDOM.render(<App />, document.querySelector("main"));
         }
     })
     .catch((err) => console.log(err));
