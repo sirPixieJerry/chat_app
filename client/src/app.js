@@ -32,8 +32,8 @@ export default class App extends Component {
         this.setState({ showModal: false });
         console.log("CLOSE!");
     }
-    onUpload() {
-        this.setState({ showModal: false });
+    onUpload(img_url) {
+        this.setState({ showModal: false, profile_picture_url: img_url });
     }
     render() {
         if (!this.state.first_name) {
@@ -57,7 +57,10 @@ export default class App extends Component {
                 </main>
                 <footer>
                     {this.state.showModal && (
-                        <AvatarUpload closeModal={this.closeModal} />
+                        <AvatarUpload
+                            closeModal={this.closeModal}
+                            onUpload={this.onUpload}
+                        />
                     )}
                 </footer>
             </>

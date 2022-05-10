@@ -57,16 +57,27 @@ function loginUser({ email, password }) {
         });
 }
 
+// function to upload avatar image
+function uploadImg(user_id, url) {
+    return db
+        .query(
+            `UPDATE users SET profile_picture_url = $2 
+            WHERE id = $1 
+            RETURNING *`,
+            [user_id, url]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+
 // function createPasswordResetCode()
 
 // function to get user info from database 🔴
 function getUserInfo(user_id) {
     return db
         .query(`SELECT * FROM users WHERE id = $1`, [user_id])
-        .then((result) => {
-            return result.rows[0];
-        })
+        .then((result) => result.rows[0])
         .catch((err) => console.log(err));
 }
 
-module.exports = { loginUser, addUser, getUserInfo };
+module.exports = { loginUser, addUser, getUserInfo, uploadImg };

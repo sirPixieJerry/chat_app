@@ -10,6 +10,12 @@ const path = require("path");
 const cookieSession = require("cookie-session");
 // require crypto random string
 const cryptoRandomString = require("crypto-random-string");
+// require multer
+const multer = require("multer");
+// require random string generator module (lookup!)
+const uidSafe = require("uid-safe");
+// ---> require s3 file!
+const { upload } = require("./s3");
 // require the secret
 const secret =
     process.env.NODE_ENV == "production"
@@ -21,6 +27,7 @@ const {
     loginUser,
     createPasswordResetCode,
     getUserInfo,
+    uploadImg,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -53,6 +60,24 @@ app.use(function (req, res, next) {
     res.setHeader("x-frame-options", "deny");
     next();
 });
+// setup multer uploader (multer --> lookup documentation):🔴
+const storage = multer.diskStorage({
+    // specify directory folder for temp uploads
+    destination: (req, file, callback) => {
+        callback(null, path.join(__dirname, "uploads")); // null (if no err!)
+    },
+    // specify filename
+    filename: (req, file, callback) => {
+        // use uidSafe to generate filename ---> (24 digits)
+        uidSafe(24).then((randomId) => {
+            // build filename + ext from originalname property
+            const fileName = `${randomId}${path.extname(file.originalname)}`; // null (if no err!)
+            callback(null, fileName);
+        });
+    },
+});
+// specify multer middleware ready to use!
+const uploader = multer({ storage });
 
 // ROUTES:
 
@@ -118,6 +143,31 @@ app.get("/api/users/me", (req, res) => {
         res.json(rows);
     });
 });
+
+// POST upload picture to upload folder then to s3 (upload) and serve it to main page🔴
+app.post(
+    "/api/users/me/upload-avatar",
+    uploader.single("image"),
+    upload,
+    (req, res) => {
+        // build data for data to pass it to the database
+        const user_id = req.session.id;
+        console.log("USER ID: ", user_id);
+        const imgName = req.file.filename;
+        const url = `https://imageboard-spiced.s3.eu-central-1.amazonaws.com/${imgName}`;
+        if (req.file) {
+            // update database then serve the new image to the main page
+            uploadImg(user_id, url)
+                .then((rows) => {
+                    console.log(rows);
+                    res.json(rows);
+                })
+                .catch((err) => console.log(err));
+        } else {
+            res.json({ success: false });
+        }
+    }
+);
 
 // GET logout request
 app.get("/logout", (req, res) => {
