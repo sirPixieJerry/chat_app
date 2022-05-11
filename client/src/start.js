@@ -6,9 +6,9 @@ fetch("/user/id.json")
     .then((res) => res.json())
     .then((user_id) => {
         if (!user_id) {
-            ReactDOM.render(<Welcome />, document.querySelector("main"));
+            ReactDOM.render(<Welcome />, document.querySelector("body"));
         } else {
-            ReactDOM.render(<App />, document.querySelector("main"));
+            ReactDOM.render(<App />, document.querySelector("body"));
         }
     })
     .catch((err) => console.log(err));

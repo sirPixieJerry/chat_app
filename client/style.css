@@ -3,7 +3,29 @@
 }
 
 body {
+    margin: 0;
     background-color: ghostwhite;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+}
+
+header {
+    height: 100px;
+    background-color: antiquewhite;
+    display: flex;
+}
+
+main {
+    background-color: azure;
+    flex: auto;
+    display: flex;
+}
+
+footer {
+    background-color: bisque;
+    height: 30px;
 }
 
 .greeting {
@@ -11,8 +33,20 @@ body {
     color: burlywood;
 }
 
-.avatar {
+.avatar-small {
     background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
+}
+
+.blackbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0, 0.6);
+    width: 100vw;
+    height: 100vh;
 }

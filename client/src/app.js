@@ -44,18 +44,25 @@ export default class App extends Component {
         return (
             <>
                 <header>
-                    <h1>I MIGHT BECOME A LOGO</h1>
+                    <p>I MIGHT BECOME A LOGO</p>
                     <Logout />
                     <Avatar
+                        className="avatar-small"
                         profile_picture_url={this.state.profile_picture_url}
                         onProfileClick={this.onProfileClick}
                     />
                 </header>
                 <main>
-                    <h1>
-                        Welcome back {this.state.first_name}{" "}
-                        {this.state.last_name}
-                    </h1>
+                    <div className="sidebar-container-left">
+                        <Avatar
+                            className="avatar-big"
+                            profile_picture_url={this.state.profile_picture_url}
+                        />
+                    </div>
+                    <p>
+                        {this.state.first_name} {this.state.last_name}
+                    </p>
+                    <div className="sidebar-container-right"></div>
                 </main>
                 <footer>
                     {this.state.showModal && (
