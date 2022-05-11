@@ -59,9 +59,11 @@ export default class App extends Component {
                             profile_picture_url={this.state.profile_picture_url}
                         />
                     </div>
-                    <p>
-                        {this.state.first_name} {this.state.last_name}
-                    </p>
+                    <div className="content-container">
+                        <p>
+                            {this.state.first_name} {this.state.last_name}
+                        </p>
+                    </div>
                     <div className="sidebar-container-right"></div>
                 </main>
                 <footer>
