@@ -70,6 +70,19 @@ function uploadImg(user_id, url) {
         .catch((err) => console.log(err));
 }
 
+// function to update users bio
+function updateBio(user_id, bio) {
+    return db
+        .query(
+            `UPDATE users SET bio = $2 
+        WHERE id = $1 
+        RETURNING *`,
+            [user_id, bio]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+
 // function createPasswordResetCode()
 
 // function to get user info from database
@@ -80,4 +93,4 @@ function getUserInfo(user_id) {
         .catch((err) => console.log(err));
 }
 
-module.exports = { loginUser, addUser, getUserInfo, uploadImg };
+module.exports = { loginUser, addUser, getUserInfo, uploadImg, updateBio };

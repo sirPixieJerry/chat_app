@@ -4,6 +4,7 @@ import { Component } from "react";
 import Logout from "./logout";
 import Avatar from "./avatar";
 import AvatarUpload from "./avatar-upload";
+import UserProfile from "./profile";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -16,14 +17,21 @@ export default class App extends Component {
         this.onProfileClick = this.onProfileClick.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     // when app is loaded do:
     componentDidMount() {
         fetch("/api/users/me")
             .then((res) => res.json())
             .then((data) => {
-                const { first_name, last_name, profile_picture_url } = data;
-                this.setState({ first_name, last_name, profile_picture_url });
+                const { first_name, last_name, profile_picture_url, bio } =
+                    data;
+                this.setState({
+                    first_name,
+                    last_name,
+                    profile_picture_url,
+                    bio,
+                });
             })
             .catch((err) => console.error(err));
     }
@@ -36,6 +44,9 @@ export default class App extends Component {
     }
     onUpload(img_url) {
         this.setState({ showModal: false, profile_picture_url: img_url });
+    }
+    updateBio(bio) {
+        this.setState({ bio: bio });
     }
     render() {
         if (!this.state.first_name) {
@@ -53,16 +64,15 @@ export default class App extends Component {
                     />
                 </header>
                 <main>
-                    <div className="sidebar-container-left">
-                        <Avatar
-                            className="avatar-big"
-                            profile_picture_url={this.state.profile_picture_url}
-                        />
-                    </div>
+                    <div className="sidebar-container-left"></div>
                     <div className="content-container">
-                        <p>
-                            {this.state.first_name} {this.state.last_name}
-                        </p>
+                        <UserProfile
+                            updateBio={this.updateBio}
+                            profile_picture_url={this.state.profile_picture_url}
+                            first_name={this.state.first_name}
+                            last_name={this.state.last_name}
+                            bio={this.state.bio}
+                        />
                     </div>
                     <div className="sidebar-container-right"></div>
                 </main>

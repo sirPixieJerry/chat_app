@@ -4,7 +4,6 @@
 
 body {
     margin: 0;
-    background-color: ghostwhite;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -13,19 +12,41 @@ body {
 
 header {
     height: 100px;
-    background-color: antiquewhite;
     display: flex;
+    border: 1px dotted black;
 }
 
 main {
-    background-color: azure;
     flex: auto;
+    display: flex;
+    border: 1px dotted black;
+}
+
+.sidebar-container-left {
+    width: 20%;
+    height: 100vh;
+    border: 1px dotted black;
+}
+
+.content-container {
+    width: 60%;
+    height: 100vh;
+    border: 1px dotted black;
+}
+
+.profile-header {
     display: flex;
 }
 
+.sidebar-container-right {
+    width: 20%;
+    height: 100vh;
+    border: 1px dotted black;
+}
+
 footer {
-    background-color: bisque;
     height: 30px;
+    border: 1px dotted black;
 }
 
 .greeting {
@@ -37,6 +58,12 @@ footer {
     background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
     height: 80px;
     width: 80px;
+}
+
+.avatar-big {
+    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
+    height: 200px;
+    width: 200px;
 }
 
 .blackbox {

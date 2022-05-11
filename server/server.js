@@ -28,6 +28,7 @@ const {
     createPasswordResetCode,
     getUserInfo,
     uploadImg,
+    updateBio,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -109,13 +110,11 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
     console.log("login req done!", req.body);
     loginUser(req.body)
-        .then((arg) => {
-            if (arg == null) {
+        .then((user_id) => {
+            if (user_id == null) {
                 res.json({ success: false });
-                console.log("failed!");
             } else {
-                console.log("logged in!", arg);
-                req.session.id = arg;
+                req.session.id = user_id;
                 res.json({ success: true });
             }
         })
@@ -138,9 +137,9 @@ app.post("/api/password", (req, res) => {
 
 // GET user info from database request
 app.get("/api/users/me", (req, res) => {
-    getUserInfo(req.session.id).then((rows) => {
-        res.json(rows);
-    });
+    getUserInfo(req.session.id)
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
 });
 
 // POST upload picture to upload folder then to s3 (upload) and serve it to main page request
@@ -156,15 +155,20 @@ app.post(
         if (req.file) {
             // update database then serve the new image to the main page
             uploadImg(user_id, url)
-                .then((rows) => {
-                    res.json(rows);
-                })
+                .then((rows) => res.json(rows))
                 .catch((err) => console.log(err));
         } else {
             res.json({ success: false });
         }
     }
 );
+
+// PUT new bio text request
+app.put("/api/users/bio", (req, res) => {
+    updateBio(req.session.id, req.body.bio)
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
+});
 
 // GET logout request
 app.get("/logout", (req, res) => {
