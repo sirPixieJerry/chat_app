@@ -18,14 +18,21 @@ export default class App extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.updateBio = this.updateBio.bind(this);
+        this.setDefaultValues = this.setDefaultValues.bind(this);
     }
     // when app is loaded do:
     componentDidMount() {
         fetch("/api/users/me")
             .then((res) => res.json())
             .then((data) => {
-                const { first_name, last_name, profile_picture_url, bio } =
-                    data;
+                const { first_name, last_name } = data;
+                // create default values for data = null
+                const bio = data.bio
+                    ? data.bio
+                    : "Tell us something about you...";
+                const profile_picture_url = data.profile_picture_url
+                    ? data.profile_picture_url
+                    : "https://imageboard-spiced.s3.eu-central-1.amazonaws.com/AeguJPpP9Q83BLXcdeUGZlCJjH7BJvYP.jpeg";
                 this.setState({
                     first_name,
                     last_name,
@@ -34,6 +41,13 @@ export default class App extends Component {
                 });
             })
             .catch((err) => console.error(err));
+    }
+    setDefaultValues() {
+        this.setState((state) => {
+            state.bio ? state.bio : "Tell us something about you...";
+            const check = state.bio;
+            console.log(typeof check);
+        });
     }
     onProfileClick() {
         // change the state by using .setState and the object({statename: value})!!!
