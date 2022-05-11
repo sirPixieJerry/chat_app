@@ -11,11 +11,13 @@ export default class BioEditor extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.switchEditMode = this.switchEditMode.bind(this);
     }
+    // switch edit mode to hide/show text input
     switchEditMode() {
         this.setState((prevState) => ({
             editMode: !prevState.editMode,
         }));
     }
+    // submit new bio text to server and database
     handleSubmit(evt) {
         evt.preventDefault();
         fetch("/api/users/bio", {
@@ -27,7 +29,9 @@ export default class BioEditor extends Component {
         })
             .then((res) => res.json())
             .then((rows) => {
+                // update bio on the fly and pass it to parent
                 this.props.updateBio(rows.bio);
+                // hide text input
                 this.setState({ editMode: false });
             })
             .catch((err) => console.log(err));

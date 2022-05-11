@@ -42,9 +42,11 @@ export default class App extends Component {
     closeModal() {
         this.setState({ showModal: false });
     }
+    // method to change avatar on the fly
     onUpload(img_url) {
         this.setState({ showModal: false, profile_picture_url: img_url });
     }
+    // method to update bio text on the fly
     updateBio(bio) {
         this.setState({ bio: bio });
     }
