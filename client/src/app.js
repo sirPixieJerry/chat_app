@@ -42,17 +42,12 @@ export default class App extends Component {
             })
             .catch((err) => console.error(err));
     }
-    setDefaultValues() {
-        this.setState((state) => {
-            state.bio ? state.bio : "Tell us something about you...";
-            const check = state.bio;
-            console.log(typeof check);
-        });
-    }
+    // change to a ternary operation switch 📌
     onProfileClick() {
         // change the state by using .setState and the object({statename: value})!!!
         this.setState({ showModal: true });
     }
+    // change to a ternary operation switch 📌
     closeModal() {
         this.setState({ showModal: false });
     }
