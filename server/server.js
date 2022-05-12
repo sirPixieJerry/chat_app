@@ -179,9 +179,12 @@ app.get("/logout", (req, res) => {
 
 // GET users by name ❌
 app.get("/api/users/:search", (req, res) => {
-    const { users } = req.params;
-    getUsersByName(users)
-        .then((rows) => res.json(rows))
+    const { search } = req.params;
+    getUsersByName(search)
+        .then((rows) => {
+            console.log("USERSAERCH @ DB RESPONSE: ", rows);
+            return res.json(rows);
+        })
         .catch((err) => console.log(err));
 });
 

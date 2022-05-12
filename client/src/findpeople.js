@@ -6,12 +6,13 @@ export default function findPeople({}) {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
+        console.log(search);
         let abort = false;
         fetch(`/api/users/${search}`)
             .then((res) => res.json())
             .then((userData) => {
                 if (!abort) {
-                    users(userData);
+                    setUsers([userData]);
                 }
             })
             .catch((err) => console.log(err));
@@ -25,7 +26,7 @@ export default function findPeople({}) {
                 placeholder="Search Users"
             />
             {users.map((user) => {
-                return <li key={user.name}>{user}</li>;
+                return <li key={user.id}>{user.id}</li>;
             })}
         </>
     );

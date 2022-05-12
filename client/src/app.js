@@ -29,12 +29,10 @@ export default class App extends Component {
             .then((data) => {
                 const { first_name, last_name } = data;
                 // create default values for data = null
-                const bio = data.bio
-                    ? data.bio
-                    : "Tell us something about you...";
-                const profile_picture_url = data.profile_picture_url
-                    ? data.profile_picture_url
-                    : "https://imageboard-spiced.s3.eu-central-1.amazonaws.com/AeguJPpP9Q83BLXcdeUGZlCJjH7BJvYP.jpeg";
+                const bio = data.bio ?? "Tell us something about you...";
+                const profile_picture_url =
+                    data.profile_picture_url ??
+                    "https://imageboard-spiced.s3.eu-central-1.amazonaws.com/AeguJPpP9Q83BLXcdeUGZlCJjH7BJvYP.jpeg";
                 this.setState({
                     first_name,
                     last_name,

@@ -96,8 +96,10 @@ function getUserInfo(user_id) {
 // query to get users by name
 function getUsersByName(users) {
     return db
-        .query(`SELECT * FROM users WHERE first_name = $1`, [users])
-        .then((result) => result.rows[0])
+        .query(`SELECT * FROM users WHERE first_name ILIKE $1`, [users + "%"])
+        .then((result) => {
+            return result.rows[0];
+        })
         .catch((err) => console.log(err));
 }
 
