@@ -5,6 +5,7 @@ import Logout from "./logout";
 import Avatar from "./avatar";
 import AvatarUpload from "./avatar-upload";
 import UserProfile from "./profile";
+import UserSearch from "./findpeople";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -43,7 +44,12 @@ export default class App extends Component {
             })
             .catch((err) => console.error(err));
     }
-    switchUserSearch() {}
+    // switch edit mode to hide/show user search
+    switchUserSearch() {
+        this.setState((prevState) => ({
+            showUserSearch: !prevState.showUserSearch,
+        }));
+    }
     // change to a ternary operation switch 📌
     onProfileClick() {
         // change the state by using .setState and the object({statename: value})!!!
@@ -81,6 +87,7 @@ export default class App extends Component {
                         <button onClick={this.switchUserSearch}>USERS</button>
                     </div>
                     <div className="content-container">
+                        {this.state.showUserSearch && <UserSearch />}
                         <UserProfile
                             updateBio={this.updateBio}
                             profile_picture_url={this.state.profile_picture_url}
