@@ -19,7 +19,6 @@ export default class App extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.updateBio = this.updateBio.bind(this);
-        this.setDefaultValues = this.setDefaultValues.bind(this);
     }
     // when app is loaded do:
     componentDidMount() {
