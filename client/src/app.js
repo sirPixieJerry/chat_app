@@ -12,6 +12,7 @@ export default class App extends Component {
         super();
         this.state = {
             showModal: false,
+            showUsers: false,
         };
         // methods that change values in this.state need to be bind inside the constructor
         this.onProfileClick = this.onProfileClick.bind(this);
