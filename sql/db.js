@@ -93,4 +93,19 @@ function getUserInfo(user_id) {
         .catch((err) => console.log(err));
 }
 
-module.exports = { loginUser, addUser, getUserInfo, uploadImg, updateBio };
+// query to get users by name
+function getUsersByName(users) {
+    return db
+        .query(`SELECT * FROM users WHERE first_name = $1`, [users])
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+
+module.exports = {
+    loginUser,
+    addUser,
+    getUserInfo,
+    uploadImg,
+    updateBio,
+    getUsersByName,
+};

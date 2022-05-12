@@ -29,6 +29,7 @@ const {
     getUserInfo,
     uploadImg,
     updateBio,
+    getUsersByName,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -174,6 +175,14 @@ app.put("/api/users/bio", (req, res) => {
 app.get("/logout", (req, res) => {
     req.session = null;
     res.json({ success: true });
+});
+
+// GET users by name ❌
+app.get("/api/users/:search", (req, res) => {
+    const { users } = req.params;
+    getUsersByName(users)
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
 });
 
 // always last!

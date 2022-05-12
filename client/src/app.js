@@ -12,13 +12,14 @@ export default class App extends Component {
         super();
         this.state = {
             showModal: false,
-            showUsers: false,
+            showUserSearch: false,
         };
         // methods that change values in this.state need to be bind inside the constructor
         this.onProfileClick = this.onProfileClick.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onUpload = this.onUpload.bind(this);
         this.updateBio = this.updateBio.bind(this);
+        this.switchUserSearch = this.switchUserSearch.bind(this);
     }
     // when app is loaded do:
     componentDidMount() {
@@ -42,6 +43,7 @@ export default class App extends Component {
             })
             .catch((err) => console.error(err));
     }
+    switchUserSearch() {}
     // change to a ternary operation switch 📌
     onProfileClick() {
         // change the state by using .setState and the object({statename: value})!!!
@@ -75,7 +77,9 @@ export default class App extends Component {
                     />
                 </header>
                 <main>
-                    <div className="sidebar-container-left"></div>
+                    <div className="sidebar-container-left">
+                        <button onClick={this.switchUserSearch}>USERS</button>
+                    </div>
                     <div className="content-container">
                         <UserProfile
                             updateBio={this.updateBio}
