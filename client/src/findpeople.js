@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function findPeople({}) {
+export default function findPeople() {
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([]);
 
@@ -11,13 +11,16 @@ export default function findPeople({}) {
         fetch(`/api/users/${search}`)
             .then((res) => res.json())
             .then((userData) => {
+                console.log("HI!", userData);
                 if (!abort) {
-                    setUsers([userData]);
+                    setUsers(userData);
                 }
             })
             .catch((err) => console.log(err));
         () => (abort = true);
     }, [search]);
+
+    console.log("USERS: ", users);
     return (
         <>
             <h1>FIND USERS COMPONENT</h1>
@@ -26,7 +29,12 @@ export default function findPeople({}) {
                 placeholder="Search Users"
             />
             {users.map((user) => {
-                return <li key={user.id}>{user.id}</li>;
+                return (
+                    <div key={user.id}>
+                        <img src={user.profile_picture_url} />
+                        {user.first_name} {user.first_name}
+                    </div>
+                );
             })}
         </>
     );

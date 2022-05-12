@@ -52,7 +52,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(
     cookieSession({
         name: "social-network-session",
-        secret: secret.secret,
+        secret: secret.SECRET,
         maxAge: 1000 * 60 * 60 * 24 * 14,
         sameSite: true,
     })
@@ -182,7 +182,7 @@ app.get("/api/users/:search", (req, res) => {
     const { search } = req.params;
     getUsersByName(search)
         .then((rows) => {
-            console.log("USERSAERCH @ DB RESPONSE: ", rows);
+            console.log("hiiii USERSAERCH @ DB RESPONSE: ", rows);
             return res.json(rows);
         })
         .catch((err) => console.log(err));
