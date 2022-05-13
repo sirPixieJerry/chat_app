@@ -11,7 +11,6 @@ export default function findPeople() {
         fetch(`/api/users/${search}`)
             .then((res) => res.json())
             .then((userData) => {
-                console.log("HI!", userData);
                 if (!abort) {
                     setUsers(userData);
                 }
@@ -19,8 +18,6 @@ export default function findPeople() {
             .catch((err) => console.log(err));
         () => (abort = true);
     }, [search]);
-
-    console.log("USERS: ", users);
     return (
         <>
             <h1>FIND USERS COMPONENT</h1>

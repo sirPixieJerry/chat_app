@@ -182,7 +182,6 @@ app.get("/api/users/:search", (req, res) => {
     const { search } = req.params;
     getUsersByName(search)
         .then((rows) => {
-            console.log("hiiii USERSAERCH @ DB RESPONSE: ", rows);
             return res.json(rows);
         })
         .catch((err) => console.log(err));

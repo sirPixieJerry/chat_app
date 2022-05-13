@@ -98,7 +98,6 @@ function getUsersByName(users) {
     return db
         .query(`SELECT * FROM users WHERE first_name ILIKE $1`, [users + "%"])
         .then((result) => {
-            console.log(result.rows);
             return result.rows;
         })
         .catch((err) => console.log(err));
