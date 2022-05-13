@@ -97,9 +97,16 @@ function getUserInfo(user_id) {
 function getUsersByName(users) {
     return db
         .query(`SELECT * FROM users WHERE first_name ILIKE $1`, [users + "%"])
-        .then((result) => {
-            return result.rows;
-        })
+        .then((result) => result.rows)
+        .catch((err) => console.log(err));
+}
+
+// query to get recent users ❌
+function getRecentUsers() {
+    console.log("REQ FROM SERVER!");
+    return db
+        .query("SELECT * FROM users ORDER BY created DESC LIMIT 4")
+        .then((result) => result.rows)
         .catch((err) => console.log(err));
 }
 
@@ -110,4 +117,5 @@ module.exports = {
     uploadImg,
     updateBio,
     getUsersByName,
+    getRecentUsers,
 };

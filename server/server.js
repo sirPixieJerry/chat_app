@@ -30,6 +30,7 @@ const {
     uploadImg,
     updateBio,
     getUsersByName,
+    getRecentUsers,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -177,7 +178,7 @@ app.get("/logout", (req, res) => {
     res.json({ success: true });
 });
 
-// GET users by name ❌
+// GET users by name
 app.get("/api/users/:search", (req, res) => {
     const { search } = req.params;
     getUsersByName(search)
@@ -185,6 +186,14 @@ app.get("/api/users/:search", (req, res) => {
             return res.json(rows);
         })
         .catch((err) => console.log(err));
+});
+
+app.get("/api/recent-users", (req, res) => {
+    console.log("RECENT USERS REQ AT SERVER!");
+    getRecentUsers().then((rows) => {
+        console.log("DB RES: ", rows);
+        return res.json(rows);
+    });
 });
 
 // always last!

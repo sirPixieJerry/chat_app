@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function findPeople() {
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        console.log(search);
         let abort = false;
         fetch(`/api/users/${search}`)
             .then((res) => res.json())
@@ -20,19 +18,27 @@ export default function findPeople() {
     }, [search]);
     return (
         <>
-            <h1>FIND USERS COMPONENT</h1>
-            <input
-                onChange={(evt) => setSearch(evt.target.value)}
-                placeholder="Search Users"
-            />
-            {users.map((user) => {
-                return (
-                    <div key={user.id}>
-                        <img src={user.profile_picture_url} />
-                        {user.first_name} {user.first_name}
-                    </div>
-                );
-            })}
+            <div className="usersearch">
+                <input
+                    onChange={(evt) => setSearch(evt.target.value)}
+                    placeholder="Search Users"
+                />
+                <div className="results">
+                    {users.map((user) => {
+                        return (
+                            <div className="search-results" key={user.id}>
+                                <img
+                                    className="avatar-user-search"
+                                    src={user.profile_picture_url}
+                                />
+                                <p>
+                                    {user.first_name} {user.first_name}
+                                </p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
         </>
     );
 }

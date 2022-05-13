@@ -6,6 +6,7 @@ import Avatar from "./avatar";
 import AvatarUpload from "./avatar-upload";
 import UserProfile from "./profile";
 import UserSearch from "./findpeople";
+import RecentUsers from "./recent-users";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -27,12 +28,9 @@ export default class App extends Component {
         fetch("/api/users/me")
             .then((res) => res.json())
             .then((data) => {
-                const { first_name, last_name } = data;
+                const { first_name, last_name, profile_picture_url } = data;
                 // create default values for data = null
                 const bio = data.bio ?? "Tell us something about you...";
-                const profile_picture_url =
-                    data.profile_picture_url ??
-                    "https://imageboard-spiced.s3.eu-central-1.amazonaws.com/AeguJPpP9Q83BLXcdeUGZlCJjH7BJvYP.jpeg";
                 this.setState({
                     first_name,
                     last_name,
@@ -72,19 +70,27 @@ export default class App extends Component {
         return (
             <>
                 <header>
-                    <p>I MIGHT BECOME A LOGO</p>
-                    <Logout />
-                    <Avatar
-                        className="avatar-small"
-                        profile_picture_url={this.state.profile_picture_url}
-                        onProfileClick={this.onProfileClick}
-                    />
+                    <div className="logo">
+                        <p>CATSPACE</p>
+                    </div>
+                    <div className="searchbar">
+                        <UserSearch />
+                    </div>
+                    <nav>
+                        <Avatar
+                            className="avatar-small"
+                            profile_picture_url={this.state.profile_picture_url}
+                            onProfileClick={this.onProfileClick}
+                        />
+                        <Logout />
+                    </nav>
                 </header>
                 <main>
                     <div className="sidebar-container-left">
                         <button onClick={this.switchUserSearch}>USERS</button>
                     </div>
                     <div className="content-container">
+                        <RecentUsers />
                         {this.state.showUserSearch && <UserSearch />}
                         <UserProfile
                             updateBio={this.updateBio}

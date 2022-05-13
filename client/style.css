@@ -11,8 +11,59 @@ body {
 }
 
 header {
-    height: 100px;
+    height: 60px;
     display: flex;
+    align-items: center;
+    border: 1px dotted black;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    width: 20%;
+    border: 1px dotted black;
+}
+
+.searchbar {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 60%;
+}
+
+.usersearch {
+    position: absolute;
+    top: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-results {
+    display: flex;
+    align-items: center;
+    background-color: gray;
+    margin: 3px 0 0 0;
+}
+
+.search-results p {
+    margin: 0 5px 0 5px;
+}
+
+.results {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 20%;
     border: 1px dotted black;
 }
 
@@ -32,6 +83,22 @@ main {
     width: 60%;
     height: 100vh;
     border: 1px dotted black;
+}
+
+.recent-users {
+    width: 100%;
+    display: flex;
+}
+
+.recent-user {
+    width: 25%;
+}
+
+.recent-user img {
+    width: 90%;
+    height: 200px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .profile-header {
@@ -56,8 +123,14 @@ footer {
 
 .avatar-small {
     background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
-    height: 80px;
-    width: 80px;
+    border-radius: 5px;
+    height: 40px;
+    width: 40px;
+}
+
+.avatar-user-search {
+    height: 60px;
+    width: 60px;
 }
 
 .avatar-big {
