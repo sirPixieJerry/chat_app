@@ -107,10 +107,15 @@ function getUsersByName(users, user_id) {
 }
 
 // query to get recent users ❌
-function getRecentUsers() {
-    console.log("REQ FROM SERVER!");
+function getRecentUsers(user_id) {
     return db
-        .query("SELECT * FROM users ORDER BY created DESC LIMIT 4")
+        .query(
+            `SELECT * FROM users 
+        WHERE id != $1 
+        ORDER BY created 
+        DESC LIMIT 4`,
+            [user_id]
+        )
         .then((result) => result.rows)
         .catch((err) => console.log(err));
 }

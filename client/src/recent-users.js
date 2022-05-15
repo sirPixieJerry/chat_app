@@ -4,7 +4,7 @@ import Avatar from "./avatar";
 export default function RecentUsers() {
     const [userData, setUserData] = useState([]);
     useEffect(() => {
-        fetch("/api/recent-users")
+        fetch("/api/recent-users") // ask teachers for reason /api/users/recent can't be used
             .then((res) => res.json())
             .then((data) => {
                 setUserData(data);
