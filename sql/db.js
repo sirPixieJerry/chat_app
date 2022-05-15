@@ -110,10 +110,8 @@ function getUsersByName(users, user_id) {
 function getRecentUsers(user_id) {
     return db
         .query(
-            `SELECT * FROM users 
-        WHERE id != $1 
-        ORDER BY created 
-        DESC LIMIT 4`,
+            `SELECT first_name, last_name, profile_picture_url, id 
+            FROM users WHERE id != $1 ORDER BY created DESC LIMIT 4`,
             [user_id]
         )
         .then((result) => result.rows)
