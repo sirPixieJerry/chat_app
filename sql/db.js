@@ -94,9 +94,14 @@ function getUserInfo(user_id) {
 }
 
 // query to get users by name
-function getUsersByName(users) {
+function getUsersByName(users, user_id) {
     return db
-        .query(`SELECT * FROM users WHERE first_name ILIKE $1`, [users + "%"])
+        .query(
+            `SELECT first_name, last_name, profile_picture_url, id
+            FROM users WHERE 
+            first_name ILIKE $1 AND id != $2 LIMIT 6`,
+            [users + "%", user_id]
+        )
         .then((result) => result.rows)
         .catch((err) => console.log(err));
 }

@@ -181,13 +181,14 @@ app.get("/logout", (req, res) => {
 // GET users by name
 app.get("/api/users/:search", (req, res) => {
     const { search } = req.params;
-    getUsersByName(search)
+    getUsersByName(search, req.session.id)
         .then((rows) => {
             return res.json(rows);
         })
         .catch((err) => console.log(err));
 });
 
+// get recent users that joined the network
 app.get("/api/recent-users", (req, res) => {
     console.log("RECENT USERS REQ AT SERVER!");
     getRecentUsers().then((rows) => {

@@ -6,15 +6,19 @@ export default function findPeople() {
 
     useEffect(() => {
         let abort = false;
-        fetch(`/api/users/${search}`)
-            .then((res) => res.json())
-            .then((userData) => {
-                if (!abort) {
-                    setUsers(userData);
-                }
-            })
-            .catch((err) => console.log(err));
-        () => (abort = true);
+        if (search) {
+            fetch(`/api/users/${search}`)
+                .then((res) => res.json())
+                .then((userData) => {
+                    if (!abort) {
+                        setUsers(userData);
+                    }
+                })
+                .catch((err) => console.log(err));
+            () => (abort = true);
+        } else {
+            setUsers(false);
+        }
     }, [search]);
     return (
         <>
@@ -23,21 +27,23 @@ export default function findPeople() {
                     onChange={(evt) => setSearch(evt.target.value)}
                     placeholder="Search Users"
                 />
-                <div className="results">
-                    {users.map((user) => {
-                        return (
-                            <div className="search-results" key={user.id}>
-                                <img
-                                    className="avatar-user-search"
-                                    src={user.profile_picture_url}
-                                />
-                                <p>
-                                    {user.first_name} {user.first_name}
-                                </p>
-                            </div>
-                        );
-                    })}
-                </div>
+                {users && (
+                    <div className="results">
+                        {users.map((user) => {
+                            return (
+                                <div className="search-results" key={user.id}>
+                                    <img
+                                        className="avatar-user-search"
+                                        src={user.profile_picture_url}
+                                    />
+                                    <p>
+                                        {user.first_name} {user.first_name}
+                                    </p>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </>
     );
