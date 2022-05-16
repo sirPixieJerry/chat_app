@@ -193,6 +193,14 @@ app.get("/api/recent-users", (req, res) => {
         .catch((err) => console.log(err));
 });
 
+// GET user info from database request
+app.get("/users/:user_id", (req, res) => {
+    console.log("PARMS: ", req.params);
+    getUserInfo(req.params.user_id)
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
+});
+
 // always last!
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

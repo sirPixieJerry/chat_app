@@ -6,6 +6,7 @@ import BioEditor from "./bio";
 export default function UserProfile({
     updateBio,
     profile_picture_url,
+    onProfileClick,
     first_name,
     last_name,
     bio,
@@ -16,6 +17,7 @@ export default function UserProfile({
                 <Avatar
                     className="avatar-big"
                     profile_picture_url={profile_picture_url}
+                    onClick={onProfileClick}
                 />
                 <div>
                     <p>

@@ -106,7 +106,7 @@ function getUsersByName(users, user_id) {
         .catch((err) => console.log(err));
 }
 
-// query to get recent users ❌
+// query to get recent users
 function getRecentUsers(user_id) {
     return db
         .query(

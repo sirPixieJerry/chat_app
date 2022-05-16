@@ -1,5 +1,6 @@
 // import Component from react:
 import { Component } from "react";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 // import components from files:
 import Logout from "./logout";
 import Avatar from "./avatar";
@@ -7,6 +8,7 @@ import AvatarUpload from "./avatar-upload";
 import UserProfile from "./profile";
 import UserSearch from "./findpeople";
 import RecentUsers from "./recent-users";
+import User from "./view-profile";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -69,47 +71,60 @@ export default class App extends Component {
         }
         return (
             <>
-                <header>
-                    <div className="logo">
-                        <p>CATSPACE</p>
-                    </div>
-                    <div className="searchbar">
-                        <UserSearch />
-                    </div>
-                    <nav>
-                        <Avatar
-                            className="avatar-small"
-                            profile_picture_url={this.state.profile_picture_url}
-                            onProfileClick={this.onProfileClick}
-                        />
-                        <Logout />
-                    </nav>
-                </header>
-                <main>
-                    <div className="sidebar-container-left">
-                        <button onClick={this.switchUserSearch}>USERS</button>
-                    </div>
-                    <div className="content-container">
-                        <RecentUsers />
-                        {this.state.showUserSearch && <UserSearch />}
-                        <UserProfile
-                            updateBio={this.updateBio}
-                            profile_picture_url={this.state.profile_picture_url}
-                            first_name={this.state.first_name}
-                            last_name={this.state.last_name}
-                            bio={this.state.bio}
-                        />
-                    </div>
-                    <div className="sidebar-container-right"></div>
-                </main>
-                <footer>
-                    {this.state.showModal && (
-                        <AvatarUpload
-                            closeModal={this.closeModal}
-                            onUpload={this.onUpload}
-                        />
-                    )}
-                </footer>
+                <BrowserRouter>
+                    <header>
+                        <div className="logo-section">
+                            <Link to="/">
+                                <img className="logo" src="./images/logo.png" />
+                            </Link>
+                        </div>
+                        <div className="searchbar">
+                            <UserSearch />
+                        </div>
+                        <nav>
+                            <Link to="/profile">
+                                <Avatar
+                                    className="avatar-small"
+                                    profile_picture_url={
+                                        this.state.profile_picture_url
+                                    }
+                                />
+                            </Link>
+                            {this.state.showModal && (
+                                <AvatarUpload
+                                    closeModal={this.closeModal}
+                                    onUpload={this.onUpload}
+                                />
+                            )}
+                            <Logout />
+                        </nav>
+                    </header>
+                    <main>
+                        <div className="sidebar-container-left"></div>
+                        <div className="content-container">
+                            <Route exact path="/">
+                                <RecentUsers />
+                                {this.state.showUserSearch && <UserSearch />}
+                            </Route>
+                            <Route exact path="/profile">
+                                <UserProfile
+                                    updateBio={this.updateBio}
+                                    profile_picture_url={
+                                        this.state.profile_picture_url
+                                    }
+                                    onProfileClick={this.onProfileClick}
+                                    first_name={this.state.first_name}
+                                    last_name={this.state.last_name}
+                                    bio={this.state.bio}
+                                />
+                            </Route>
+                            <Route exact path="/user/:user_id">
+                                <User />
+                            </Route>
+                        </div>
+                        <div className="sidebar-container-right"></div>
+                    </main>
+                </BrowserRouter>
             </>
         );
     }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Avatar from "./avatar";
 
 export default function RecentUsers() {
@@ -13,18 +14,22 @@ export default function RecentUsers() {
     }, []);
     return (
         <>
-            <h3>RECENT USERS</h3>
             <div className="recent-users">
                 {userData.map((user) => {
                     return (
-                        <div className="recent-user" key={user.id}>
+                        <Link
+                            to={`/user/${user.id}`}
+                            key={user.id}
+                            className="recent-user"
+                        >
                             <Avatar
                                 profile_picture_url={user.profile_picture_url}
+                                key={user.id}
                             />
                             <p>
-                                {user.first_name} {user.first_name}
+                                {user.first_name} {user.last_name}
                             </p>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>
