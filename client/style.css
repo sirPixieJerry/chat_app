@@ -69,7 +69,7 @@ header {
 nav {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     width: 20%;
     border: 1px dotted black;
@@ -159,4 +159,19 @@ footer {
     background-color: rgb(0, 0, 0, 0.6);
     width: 100vw;
     height: 100vh;
+}
+
+.custom-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+}
+
+.custom-button img {
+    width: 30px;
+    height: 30px;
 }

@@ -75,7 +75,7 @@ export default class App extends Component {
                     <header>
                         <div className="logo-section">
                             <Link to="/">
-                                <img className="logo" src="./images/logo.png" />
+                                <img className="logo" src="/images/logo.png" />
                             </Link>
                         </div>
                         <div className="searchbar">
@@ -89,6 +89,9 @@ export default class App extends Component {
                                         this.state.profile_picture_url
                                     }
                                 />
+                            </Link>
+                            <Link to="/requests" className="custom-button">
+                                <img src="/images/addfriend-96.png" />
                             </Link>
                             {this.state.showModal && (
                                 <AvatarUpload
@@ -118,6 +121,7 @@ export default class App extends Component {
                                     bio={this.state.bio}
                                 />
                             </Route>
+                            <Route exact path="/requests"></Route>
                             <Route exact path="/user/:user_id">
                                 <User />
                             </Route>

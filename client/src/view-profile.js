@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import Avatar from "./avatar";
+import AddFriend from "./add-friend";
 
 export default function User() {
     const [user, setUser] = useState([]);
     const { user_id } = useParams();
-    console.log("PARM:", user_id);
     const history = useHistory();
-    const { error, setError } = useState(""); // in case of error
+    const [error, setError] = useState(""); // in case of error
     useEffect(() => {
+        if (!user_id) {
+            return;
+        }
         fetch(`/users/${user_id}`)
             .then((res) => res.json())
             .then((data) => setUser(data))
             .catch((err) => console.log(err));
-    }, []);
+    }, [user_id]);
     return (
         <>
             <h1>USER PROFILE OTHER USER</h1>{" "}
@@ -29,6 +32,8 @@ export default function User() {
                     </p>
                     <p>{user.bio}</p>
                 </div>
+                {<AddFriend user_id={user_id} />}
+                <p></p>
             </div>
         </>
     );

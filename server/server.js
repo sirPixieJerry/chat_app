@@ -31,6 +31,8 @@ const {
     updateBio,
     getUsersByName,
     getRecentUsers,
+    getFriendshipStatus,
+    addFriend,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -195,9 +197,30 @@ app.get("/api/recent-users", (req, res) => {
 
 // GET user info from database request
 app.get("/users/:user_id", (req, res) => {
-    console.log("PARMS: ", req.params);
     getUserInfo(req.params.user_id)
         .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
+});
+
+// GET friendship status ❌
+app.get("/api/friendships/status/:user_id", (req, res) => {
+    getFriendshipStatus(req.params.user_id, req.session.id)
+        .then((rows) => {
+            if (!rows) {
+                return res.json({ success: false });
+            }
+            return res.json(rows);
+        })
+        .catch((err) => console.log(err));
+});
+
+// POST add friend ❌
+app.post("/api/friendships/add", (req, res) => {
+    console.log(req.body.user_id);
+    addFriend(req.body.user_id, req.session.id)
+        .then((rows) => {
+            return res.json(rows);
+        })
         .catch((err) => console.log(err));
 });
 

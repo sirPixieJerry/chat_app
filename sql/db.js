@@ -118,6 +118,32 @@ function getRecentUsers(user_id) {
         .catch((err) => console.log(err));
 }
 
+// query to get friendship status ❌
+function getFriendshipStatus(friend_id, user_id) {
+    return db
+        .query(
+            `SELECT * FROM friendships
+            WHERE (recipient_id = $1 AND sender_id = $2)
+            OR (recipient_id = $2 AND sender_id = $1)`,
+            [friend_id, user_id]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+// query to get friendship status ❌
+function addFriend(friend_id, user_id) {
+    return db
+        .query(
+            `INSERT INTO friendships (sender_id, recipient_id, accepted)
+            VALUES ($1, $2, $3)
+            RETURNING *`,
+            [friend_id, user_id, false]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+addFriend;
+
 module.exports = {
     loginUser,
     addUser,
@@ -126,4 +152,6 @@ module.exports = {
     updateBio,
     getUsersByName,
     getRecentUsers,
+    getFriendshipStatus,
+    addFriend,
 };

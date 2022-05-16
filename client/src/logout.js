@@ -11,6 +11,10 @@ export default class Logout extends Component {
         fetch("/logout").then(location.replace("/"));
     }
     render() {
-        return <button onClick={this.handleLogout}>logout</button>;
+        return (
+            <div className="custom-button" onClick={this.handleLogout}>
+                <img src="/images/logout-64.png" />
+            </div>
+        );
     }
 }
