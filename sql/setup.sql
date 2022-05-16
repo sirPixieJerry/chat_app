@@ -1,4 +1,5 @@
 -- drop existing table
+DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS password_reset;
 DROP TABLE IF EXISTS users;
 
@@ -19,4 +20,11 @@ CREATE TABLE password_reset (
      code VARCHAR(6) NOT NULL,
      email VARCHAR(50) NOT NULL,
      created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE friendships(
+  id SERIAL PRIMARY KEY,
+  sender_id INT REFERENCES users(id) NOT NULL,
+  recipient_id INT REFERENCES users(id) NOT NULL,
+  accepted BOOLEAN DEFAULT false
 );
