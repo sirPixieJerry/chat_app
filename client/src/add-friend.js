@@ -23,17 +23,6 @@ export default function handleFriendship({ user_id }) {
             })
             .catch((err) => console.log(err));
     }, [user_id]);
-    function checkStatus(data, user_id) {
-        if (data.accepted == true) {
-            setFriendState({ ...data, status: 4 });
-        } else if (data.accepted == false && data.sender_id == user_id) {
-            setFriendState({ ...data, status: 3 });
-        } else if (data.accepted == false) {
-            setFriendState({ ...data, status: 2 });
-        } else {
-            setFriendState({ ...data, status: 1 });
-        }
-    }
     function handleClick() {
         if (obj[friendState.status] === false) {
             return;
@@ -46,6 +35,17 @@ export default function handleFriendship({ user_id }) {
                 .then((res) => res.json())
                 .then((data) => checkStatus(data, user_id))
                 .catch((err) => console.log(err));
+        }
+    }
+    function checkStatus(data, user_id) {
+        if (data.accepted == true) {
+            setFriendState({ ...data, status: 4 });
+        } else if (data.accepted == false && data.sender_id == user_id) {
+            setFriendState({ ...data, status: 3 });
+        } else if (data.accepted == false) {
+            setFriendState({ ...data, status: 2 });
+        } else {
+            setFriendState({ ...data, status: 1 });
         }
     }
     return (
