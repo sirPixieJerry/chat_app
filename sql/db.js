@@ -130,19 +130,45 @@ function getFriendshipStatus(friend_id, user_id) {
         .then((result) => result.rows[0])
         .catch((err) => console.log(err));
 }
-// query to get friendship status ❌
+
+// query to add friend ❌
 function addFriend(friend_id, user_id) {
     return db
         .query(
             `INSERT INTO friendships (sender_id, recipient_id, accepted)
-            VALUES ($1, $2, $3)
+            VALUES ($2, $1, FALSE)
             RETURNING *`,
-            [friend_id, user_id, false]
+            [friend_id, user_id]
         )
         .then((result) => result.rows[0])
         .catch((err) => console.log(err));
 }
-addFriend;
+
+// query to accept friend ❌
+function acceptFriend(sender_id, recipient_id) {
+    return db
+        .query(
+            `UPDATE friendships SET accepted = TRUE
+            WHERE (sender_id = $1 AND recipient_id = $2
+                OR sender_id = $2 AND recipient_id = $1)
+            RETURNING *`,
+            [sender_id, recipient_id]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
+
+// query to remove friend ❌
+function removeFriend(sender_id, recipient_id) {
+    return db
+        .query(
+            `DELETE FROM friendships WHERE (sender_id = $1 AND recipient_id = $2)
+            OR (sender_id = $2 AND recipient_id = $1) RETURNING *`,
+            [sender_id, recipient_id]
+        )
+        .then((result) => result.rows[0])
+        .catch((err) => console.log(err));
+}
 
 module.exports = {
     loginUser,
@@ -154,4 +180,6 @@ module.exports = {
     getRecentUsers,
     getFriendshipStatus,
     addFriend,
+    acceptFriend,
+    removeFriend,
 };

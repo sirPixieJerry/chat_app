@@ -33,6 +33,8 @@ const {
     getRecentUsers,
     getFriendshipStatus,
     addFriend,
+    acceptFriend,
+    removeFriend,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -216,8 +218,28 @@ app.get("/api/friendships/status/:user_id", (req, res) => {
 
 // POST add friend ❌
 app.post("/api/friendships/add", (req, res) => {
-    console.log(req.body.user_id);
-    addFriend(req.body.user_id, req.session.id)
+    const { user_id } = req.body;
+    addFriend(user_id, req.session.id)
+        .then((rows) => {
+            return res.json(rows);
+        })
+        .catch((err) => console.log(err));
+});
+
+// POST accept friend ❌
+app.post("/api/friendships/accept", (req, res) => {
+    const { sender_id, recipient_id } = req.body;
+    acceptFriend(sender_id, recipient_id)
+        .then((rows) => {
+            return res.json(rows);
+        })
+        .catch((err) => console.log(err));
+});
+
+// POST remove friend ❌
+app.post("/api/friendships/remove", (req, res) => {
+    const { sender_id, recipient_id } = req.body;
+    removeFriend(sender_id, recipient_id)
         .then((rows) => {
             return res.json(rows);
         })
