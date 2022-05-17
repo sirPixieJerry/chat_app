@@ -21,6 +21,9 @@ export default function findPeople() {
             setUsers(false);
         }
     }, [search]);
+    function handleClick() {
+        setUsers(false);
+    }
     return (
         <>
             <div className="usersearch">
@@ -36,6 +39,7 @@ export default function findPeople() {
                                     to={`/user/${user.id}`}
                                     key={user.id}
                                     className="search-results"
+                                    onClick={handleClick}
                                 >
                                     <img
                                         className="avatar-user-search"

@@ -4,6 +4,7 @@ export default function handleFriendship({ user_id }) {
     const [friendState, setFriendState] = useState();
     const [buttonState, setButtonState] = useState({ status: "ADD FRIEND" });
     useEffect(() => {
+        console.log("REQ DONE!");
         fetch(`/api/friendships/status/${user_id}`)
             .then((res) => res.json())
             .then((data) => {
@@ -17,7 +18,7 @@ export default function handleFriendship({ user_id }) {
                 }
             })
             .catch((err) => console.log(err));
-    }, [user_id, friendState]);
+    }, [user_id]);
     function handleClick() {
         if (buttonState.status === "ADD FRIEND") {
             fetch("/api/friendships/add", {
