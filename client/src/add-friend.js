@@ -1,20 +1,17 @@
 import { useState, useEffect } from "react";
 
 export default function handleFriendship({ user_id }) {
-    const [friendState, setFriendState] = useState({ status: 5 });
-    const buttonState = {
-        1: "ADD FRIEND",
-        2: "FRIEND REQUESTED",
-        3: "ACCEPT FRIEND",
-        4: "REMOVE FRIEND",
-        5: "",
-    };
-    const obj = {
-        1: "add",
-        2: false,
-        3: "accept",
-        4: "remove",
-    };
+    const [friendState, setFriendState] = useState({ status: 4 });
+    const recentState = new Map([
+        ["ADD FRIEND", "add"],
+        ["FRIEND REQUESTED", false],
+        ["ACCEPT FRIEND", "accept"],
+        ["REMOVE FRIEND", "remove"],
+        ["", ""],
+    ]);
+    const buttonState = [...recentState.keys()];
+    const fetchState = [...recentState.values()];
+    const buttonText = buttonState[friendState.status] || "";
     useEffect(() => {
         fetch(`/api/friendships/status/${user_id}`)
             .then((res) => res.json())
@@ -24,10 +21,10 @@ export default function handleFriendship({ user_id }) {
             .catch((err) => console.log(err));
     }, [user_id]);
     function handleClick() {
-        if (obj[friendState.status] === false) {
+        if (fetchState[friendState.status] === false) {
             return;
         } else {
-            fetch(`/api/friendships/${obj[friendState.status]}`, {
+            fetch(`/api/friendships/${fetchState[friendState.status]}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ user_id, ...friendState }),
@@ -39,21 +36,14 @@ export default function handleFriendship({ user_id }) {
     }
     function checkStatus(data, user_id) {
         if (data.accepted == true) {
-            setFriendState({ ...data, status: 4 });
-        } else if (data.accepted == false && data.sender_id == user_id) {
             setFriendState({ ...data, status: 3 });
-        } else if (data.accepted == false) {
+        } else if (data.accepted == false && data.sender_id == user_id) {
             setFriendState({ ...data, status: 2 });
-        } else {
+        } else if (data.accepted == false) {
             setFriendState({ ...data, status: 1 });
+        } else {
+            setFriendState({ ...data, status: 0 });
         }
     }
-    return (
-        <>
-            <button onClick={handleClick}>
-                {buttonState[friendState.status]}
-            </button>
-            <p></p>
-        </>
-    );
+    return <button onClick={handleClick}>{buttonText}</button>;
 }
