@@ -15,7 +15,6 @@ export default function ShowFriends({ user_id }) {
     const requests = useSelector((state) =>
         state.contacts.filter((user) => !user.accepted)
     );
-    console.log(friends);
     useEffect(() => {
         fetch("/api/friends")
             .then((res) => res.json())
@@ -23,6 +22,40 @@ export default function ShowFriends({ user_id }) {
                 dispatch(updateContacts(data));
             });
     }, [user_id]);
+    function handleRemovefriend(evt) {
+        console.log(evt.currentTarget.id);
+        fetch("/api/friendships/remove", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                sender_id: user_id,
+                recipient_id: evt.currentTarget.id,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                // dispatch(updateContacts());
+            })
+            .catch((err) => console.log(err));
+    }
+    function handleAddfriend(evt) {
+        console.log(evt.currentTarget.id);
+        fetch("/api/friendships/accept", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                sender_id: user_id,
+                recipient_id: evt.currentTarget.id,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                dispatch(updateContacts(data));
+            })
+            .catch((err) => console.log(err));
+    }
     return (
         <>
             <div>
@@ -35,18 +68,24 @@ export default function ShowFriends({ user_id }) {
                                     to={`/user/${user.id}`}
                                     key={user.id}
                                     className="friend-list"
-                                    id={user.id}
                                 >
                                     <Avatar
                                         profile_picture_url={
                                             user.profile_picture_url
                                         }
                                     />
-                                    <p>
-                                        {user.first_name} {user.last_name}
-                                    </p>
-                                    <button>REMOVE FRIEND</button>
+                                    <div>
+                                        <p>
+                                            {user.first_name} {user.last_name}
+                                        </p>
+                                    </div>
                                 </Link>
+                                <button
+                                    onClick={handleRemovefriend}
+                                    id={user.id}
+                                >
+                                    REMOVE FRIEND
+                                </button>
                             </>
                         );
                     })}
@@ -59,18 +98,21 @@ export default function ShowFriends({ user_id }) {
                                     to={`/user/${user.id}`}
                                     key={user.id}
                                     className="friend-list"
-                                    id={user.id}
                                 >
                                     <Avatar
                                         profile_picture_url={
                                             user.profile_picture_url
                                         }
                                     />
-                                    <p>
-                                        {user.first_name} {user.last_name}
-                                    </p>
-                                    <button>ADD FRIEND</button>
+                                    <div>
+                                        <p>
+                                            {user.first_name} {user.last_name}
+                                        </p>
+                                    </div>
                                 </Link>
+                                <button id={user.id} onClick={handleAddfriend}>
+                                    ADD FRIEND
+                                </button>
                             </>
                         );
                     })}
