@@ -1,7 +1,14 @@
 export function contactsReducer(contacts = [], action) {
-    // your logic goes here
+    if (action.type == "updateContacts") {
+        return action.payload.newContact;
+    }
     return contacts;
 }
 
 // ACTION CREATORS
-// your actions goes here
+export function updateContacts(newContact) {
+    return {
+        type: "updateContacts",
+        payload: { newContact },
+    };
+}

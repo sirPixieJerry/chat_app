@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function handleFriendship({ user_id }) {
-    const [friendState, setFriendState] = useState({ status: 4 });
+    const [friendState, setFriendState] = useState();
     const recentState = new Map([
         ["ADD FRIEND", "add"],
         ["FRIEND REQUESTED", false],
@@ -11,7 +11,7 @@ export default function handleFriendship({ user_id }) {
     ]);
     const buttonState = [...recentState.keys()];
     const fetchState = [...recentState.values()];
-    const buttonText = buttonState[friendState.status] || "";
+    const buttonText = friendState ? buttonState[friendState.status] : "";
     useEffect(() => {
         fetch(`/api/friendships/status/${user_id}`)
             .then((res) => res.json())
