@@ -1,6 +1,7 @@
 // import components from files:
 import Avatar from "./avatar";
 import BioEditor from "./bio";
+import ShowFriends from "./friends";
 
 // component to show user's profile
 export default function UserProfile({
@@ -10,6 +11,7 @@ export default function UserProfile({
     first_name,
     last_name,
     bio,
+    user_id,
 }) {
     return (
         <>
@@ -26,6 +28,9 @@ export default function UserProfile({
                     <p>{bio}</p>
                     <BioEditor updateBio={updateBio} />
                 </div>
+            </div>
+            <div>
+                <ShowFriends user_id={user_id} />
             </div>
         </>
     );

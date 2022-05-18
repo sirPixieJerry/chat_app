@@ -35,6 +35,7 @@ const {
     addFriend,
     acceptFriend,
     removeFriend,
+    getfriends,
 } = require("../sql/db");
 
 // SERVER SETUP:
@@ -204,7 +205,7 @@ app.get("/users/:user_id", (req, res) => {
         .catch((err) => console.log(err));
 });
 
-// GET friendship status ❌
+// GET friendship status
 app.get("/api/friendships/status/:user_id", (req, res) => {
     getFriendshipStatus(req.params.user_id, req.session.id)
         .then((rows) => {
@@ -216,13 +217,11 @@ app.get("/api/friendships/status/:user_id", (req, res) => {
         .catch((err) => console.log(err));
 });
 
-// POST add friend ❌
+// POST add friend
 app.post("/api/friendships/add", (req, res) => {
     const { user_id } = req.body;
     addFriend(user_id, req.session.id)
-        .then((rows) => {
-            return res.json(rows);
-        })
+        .then((rows) => res.json(rows))
         .catch((err) => console.log(err));
 });
 
@@ -230,9 +229,7 @@ app.post("/api/friendships/add", (req, res) => {
 app.post("/api/friendships/accept", (req, res) => {
     const { sender_id, recipient_id } = req.body;
     acceptFriend(sender_id, recipient_id)
-        .then((rows) => {
-            return res.json(rows);
-        })
+        .then((rows) => res.json(rows))
         .catch((err) => console.log(err));
 });
 
@@ -240,9 +237,14 @@ app.post("/api/friendships/accept", (req, res) => {
 app.post("/api/friendships/remove", (req, res) => {
     const { sender_id, recipient_id } = req.body;
     removeFriend(sender_id, recipient_id)
-        .then((rows) => {
-            return res.json(rows);
-        })
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
+});
+
+// GET friends ❌
+app.get("/api/friends", (req, res) => {
+    getfriends(req.session.id)
+        .then((rows) => res.json(rows))
         .catch((err) => console.log(err));
 });
 

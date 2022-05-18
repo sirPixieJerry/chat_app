@@ -30,7 +30,7 @@ export default class App extends Component {
         fetch("/api/users/me")
             .then((res) => res.json())
             .then((data) => {
-                const { first_name, last_name, profile_picture_url } = data;
+                const { first_name, last_name, profile_picture_url, id } = data;
                 // create default values for data = null
                 const bio = data.bio ?? "Tell us something about you...";
                 this.setState({
@@ -38,6 +38,7 @@ export default class App extends Component {
                     last_name,
                     profile_picture_url,
                     bio,
+                    id,
                 });
             })
             .catch((err) => console.error(err));
@@ -119,6 +120,7 @@ export default class App extends Component {
                                     first_name={this.state.first_name}
                                     last_name={this.state.last_name}
                                     bio={this.state.bio}
+                                    user_id={this.state.id}
                                 />
                             </Route>
                             <Route exact path="/requests"></Route>

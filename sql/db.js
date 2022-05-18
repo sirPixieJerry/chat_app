@@ -170,6 +170,22 @@ function removeFriend(sender_id, recipient_id) {
         .catch((err) => console.log(err));
 }
 
+// query to get friends list and friends requested ❌
+function getfriends(user_id) {
+    return db
+        .query(
+            `SELECT users.id, first_name, last_name, profile_picture_url, accepted
+            FROM friendships
+            JOIN users
+            ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+            OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+            OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`,
+            [user_id]
+        )
+        .then((result) => result.rows)
+        .catch((err) => console.log(err));
+}
+
 module.exports = {
     loginUser,
     addUser,
@@ -182,4 +198,5 @@ module.exports = {
     addFriend,
     acceptFriend,
     removeFriend,
+    getfriends,
 };
