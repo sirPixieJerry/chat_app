@@ -1,28 +1,24 @@
 export function contactsReducer(contacts = [], action) {
-    if (action.type == "getContactAndRequests") {
-        return (contacts = action.payload.contactsAndRequests);
-    } else if (action.type == "removeContact") {
-        console.log("REMOVE");
-        contacts = contacts.map((user) => {
+    if (action.type == "contacts") {
+        return (contacts = action.payload.contacts);
+    } else if (action.type == "contacts/remove") {
+        return (contacts = contacts.filter(
+            (user) =>
+                user.id !==
+                (action.payload.contact.sender_id ||
+                    action.payload.contact.recipient_id)
+        ));
+    } else if (action.type == "contacts/answer") {
+        return (contacts = contacts.map((user) => {
             console.log(user);
-            if (user.id === action.payload.id) {
-                return {
-                    ...user,
-                    accepted: true,
-                };
-            } else {
-                return user;
+            if (
+                user.id == action.payload.contact.sender_id ||
+                action.payload.contact.recipient.id
+            ) {
+                user = { ...user, accepted: true };
             }
-        });
-    } else if (action.type == "answerRequest") {
-        console.log("ANSWER");
-        contacts = contacts.map((user) => {
-            if (user.id === !action.payload.id) {
-                return user;
-            } else {
-                return;
-            }
-        });
+            return user;
+        }));
     }
     return contacts;
 }
@@ -30,25 +26,25 @@ export function contactsReducer(contacts = [], action) {
 // ACTION CREATORS
 
 // get all contacts and requests from database
-export function getContactAndRequests(contactsAndRequests) {
+export function getContactAndRequests(contacts) {
     return {
-        type: "getContactAndRequests",
-        payload: { contactsAndRequests },
+        type: "contacts",
+        payload: { contacts },
     };
 }
 
 // remove contacts
-export function removeContacts(removeContacts) {
+export function removeContacts(contact) {
     return {
-        type: "removeContact",
-        payload: { removeContacts },
+        type: "contacts/remove",
+        payload: { contact },
     };
 }
 
 // answer request
-export function answerRequest(answerRequest) {
+export function answerRequest(contact) {
     return {
-        type: "answerRequest",
-        payload: { answerRequest },
+        type: "contacts/answer",
+        payload: { contact },
     };
 }

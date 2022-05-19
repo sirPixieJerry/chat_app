@@ -16,7 +16,7 @@ export default function ShowFriends({ user_id }) {
     const friends = useSelector((state) =>
         state.contacts.filter((user) => user.accepted)
     );
-    console.log(friends);
+    // console.log(friends);
     const requests = useSelector((state) =>
         state.contacts.filter((user) => !user.accepted)
     );
@@ -28,7 +28,7 @@ export default function ShowFriends({ user_id }) {
             });
     }, [user_id]);
     function handleRemovefriend(evt) {
-        console.log(evt.currentTarget.id);
+        // console.log(evt.currentTarget.id);
         fetch("/api/friendships/remove", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -39,13 +39,12 @@ export default function ShowFriends({ user_id }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 dispatch(removeContacts(data));
             })
             .catch((err) => console.log(err));
     }
     function handleAddfriend(evt) {
-        console.log(evt.currentTarget.id);
+        // console.log(evt.currentTarget.id);
         fetch("/api/friendships/accept", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -56,8 +55,7 @@ export default function ShowFriends({ user_id }) {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
-                dispatch(answerRequest(data)); // ❌
+                dispatch(answerRequest(data));
             })
             .catch((err) => console.log(err));
     }
