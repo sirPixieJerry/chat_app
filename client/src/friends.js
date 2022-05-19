@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 // import components from files:
 import Avatar from "./avatar";
 import { useDispatch, useSelector } from "react-redux";
-import { updateContacts } from "./redux/contacts/slice";
+import {
+    getContactAndRequests,
+    removeContacts,
+    answerRequest,
+} from "./redux/contacts/slice";
 
 // component to show friends
 export default function ShowFriends({ user_id }) {
@@ -12,6 +16,7 @@ export default function ShowFriends({ user_id }) {
     const friends = useSelector((state) =>
         state.contacts.filter((user) => user.accepted)
     );
+    console.log(friends);
     const requests = useSelector((state) =>
         state.contacts.filter((user) => !user.accepted)
     );
@@ -19,7 +24,7 @@ export default function ShowFriends({ user_id }) {
         fetch("/api/friends")
             .then((res) => res.json())
             .then((data) => {
-                dispatch(updateContacts(data));
+                dispatch(getContactAndRequests(data));
             });
     }, [user_id]);
     function handleRemovefriend(evt) {
@@ -35,7 +40,7 @@ export default function ShowFriends({ user_id }) {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                // dispatch(updateContacts());
+                dispatch(removeContacts(data));
             })
             .catch((err) => console.log(err));
     }
@@ -52,7 +57,7 @@ export default function ShowFriends({ user_id }) {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                dispatch(updateContacts(data));
+                dispatch(answerRequest(data)); // ❌
             })
             .catch((err) => console.log(err));
     }
