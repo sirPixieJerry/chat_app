@@ -185,6 +185,33 @@ function getfriends(user_id) {
         .then((result) => result.rows);
 }
 
+// query to get chat maessages
+function getChat() {
+    return db
+        .query(
+            `SELECT chat_messages.*, users.first_name, users.last_name, users.profile_picture_url
+            FROM chat_messages
+            JOIN users
+            ON users.id = chat_messages.sender_id
+            ORDER by crated_at DESC
+            LIMIT 20`,
+            []
+        )
+        .then((result) => result.rows);
+}
+
+// query to store the chat message
+function storeChatMessage({ user_id, message }) {
+    return db
+        .query(
+            `INSERT INTO chat_messages (sender_id, text)
+            VALUES ($1, $2)
+            RETURNING *`,
+            [user_id, message]
+        )
+        .then((result) => result.rows[0]);
+}
+
 module.exports = {
     loginUser,
     addUser,
@@ -198,4 +225,5 @@ module.exports = {
     acceptFriend,
     removeFriend,
     getfriends,
+    getChat,
 };
