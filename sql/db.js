@@ -226,4 +226,5 @@ module.exports = {
     removeFriend,
     getfriends,
     getChat,
+    storeChatMessage,
 };
