@@ -9,6 +9,7 @@ import UserProfile from "./profile";
 import UserSearch from "./findpeople";
 import RecentUsers from "./recent-users";
 import User from "./view-profile";
+import GloabalChat from "./chat";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -109,6 +110,7 @@ export default class App extends Component {
                             <Route exact path="/">
                                 <RecentUsers />
                                 {this.state.showUserSearch && <UserSearch />}
+                                <GloabalChat user_id={this.state.id} />
                             </Route>
                             <Route exact path="/profile">
                                 <UserProfile
