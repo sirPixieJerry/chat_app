@@ -1,5 +1,5 @@
 // setup reducer for global chat messages
-export function gloablChatReducer(globalChat = [], action) {
+export function globalChatReducer(globalChat = [], action) {
     if (action.type == "loadChat") {
         return (globalChat = action.payload.chatMessages);
     } else if (action.type == "addChatMessage") {
