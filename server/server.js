@@ -37,6 +37,7 @@ const {
     removeFriend,
     getfriends,
     getChat,
+    storeChatMessage,
 } = require("../sql/db");
 
 // SERVER SETUP:
