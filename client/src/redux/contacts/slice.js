@@ -13,7 +13,7 @@ export function contactsReducer(contacts = [], action) {
             console.log(user);
             if (
                 user.id == action.payload.contact.sender_id ||
-                action.payload.contact.recipient.id
+                action.payload.contact.recipient_id
             ) {
                 user = { ...user, accepted: true };
             }

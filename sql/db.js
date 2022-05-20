@@ -182,8 +182,7 @@ function getfriends(user_id) {
             OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`,
             [user_id]
         )
-        .then((result) => result.rows)
-        .catch((err) => console.log(err));
+        .then((result) => result.rows);
 }
 
 module.exports = {
