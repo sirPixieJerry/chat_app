@@ -38,12 +38,18 @@ const {
     getfriends,
     getChat,
     storeChatMessage,
+    getLastChatMessage,
 } = require("../sql/db");
+
+// SETUP SOCKET.IO ❌
+const { Server } = require("http");
 
 // SERVER SETUP:
 
 // start the server
 const app = express();
+// socket.io implementation
+const server = Server(app);
 // choose the port
 const PORT = process.env.PORT || 3001;
 
@@ -57,14 +63,13 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 // setup middleware to populate req.body with form data
 app.use(express.urlencoded({ extended: false }));
 // setup cookie-session
-app.use(
-    cookieSession({
-        name: "social-network-session",
-        secret: secret.SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+const session = cookieSession({
+    name: "social-network-session",
+    secret: secret.SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+    sameSite: true,
+});
+app.use(session);
 // Prevent Framing
 app.use(function (req, res, next) {
     res.setHeader("x-frame-options", "deny");
@@ -250,12 +255,49 @@ app.get("/api/friends", (req, res) => {
         .catch((err) => console.log(err));
 });
 
+// GET chat messages
+app.get("/api/chat", (req, res) => {
+    getChat()
+        .then((rows) => res.json(rows))
+        .catch((err) => console.log(err));
+});
+
 // always last!
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
+// SOCKET.IO
+
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith(`http://localhost:3000`)),
+});
+io.use((socket, next) => session(socket.request, socket.request.res, next));
+
+// sockets
+io.on("connection", function (socket) {
+    const user_id = socket.request.session.id;
+    console.log(`user ${user_id} is connected with the socket-id `, socket.id);
+    getChat()
+        .then((rows) => socket.emit("getChatHistory", { chatHistory: rows }))
+        .catch((err) => console.log(err));
+
+    socket.on("newMessage", ({ newMessage }) => {
+        const user_id = socket.request.session.id;
+        storeChatMessage(user_id, newMessage).then(() => {
+            getLastChatMessage().then((rows) => {
+                console.log(rows);
+                io.emit("storedMessage", rows);
+            });
+        });
+    });
+    socket.on("disconnect", () => {
+        console.log("user disconnected");
+    });
+});
+
 // server listening to chosen port
-app.listen(PORT, function () {
+server.listen(PORT, function () {
     console.log(`I'm listening to ${PORT}...`);
 });

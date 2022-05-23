@@ -26,9 +26,6 @@ export default function RecentUsers() {
                                 profile_picture_url={user.profile_picture_url}
                                 key={user.id}
                             />
-                            <p>
-                                {user.first_name} {user.last_name}
-                            </p>
                         </Link>
                     );
                 })}

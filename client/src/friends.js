@@ -1,5 +1,5 @@
 // import hooks from react
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 // import components from files:
 import Avatar from "./avatar";

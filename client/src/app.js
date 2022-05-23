@@ -108,7 +108,7 @@ export default class App extends Component {
                         <div className="sidebar-container-left"></div>
                         <div className="content-container">
                             <Route exact path="/">
-                                <RecentUsers />
+                                {/* <RecentUsers /> */}
                                 {this.state.showUserSearch && <UserSearch />}
                                 <GloabalChat user_id={this.state.id} />
                             </Route>

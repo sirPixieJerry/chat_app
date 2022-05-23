@@ -193,7 +193,7 @@ function getChat() {
             FROM chat_messages
             JOIN users
             ON users.id = chat_messages.sender_id
-            ORDER by crated_at DESC
+            ORDER by created_at DESC
             LIMIT 20`,
             []
         )
@@ -201,13 +201,28 @@ function getChat() {
 }
 
 // query to store the chat message
-function storeChatMessage({ user_id, message }) {
+function storeChatMessage(user_id, message) {
     return db
         .query(
             `INSERT INTO chat_messages (sender_id, text)
             VALUES ($1, $2)
             RETURNING *`,
             [user_id, message]
+        )
+        .then((result) => result.rows[0]);
+}
+
+// query to get chat maessages
+function getLastChatMessage() {
+    return db
+        .query(
+            `SELECT chat_messages.id AS id, chat_messages.sender_id, chat_messages.text, chat_messages.created_at, users.first_name, users.last_name, users.profile_picture_url 
+            FROM chat_messages
+            JOIN users
+            ON users.id = chat_messages.sender_id
+            ORDER by created_at DESC
+            LIMIT 1`,
+            []
         )
         .then((result) => result.rows[0]);
 }
@@ -227,4 +242,5 @@ module.exports = {
     getfriends,
     getChat,
     storeChatMessage,
+    getLastChatMessage,
 };
