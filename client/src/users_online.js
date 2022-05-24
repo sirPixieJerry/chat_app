@@ -12,20 +12,28 @@ import {
 } from "./redux/users_online/sclice";
 
 // connect to socket.io
-import { io } from "socket.io-client";
-let socket;
+import { socket } from "./socket";
+// import { io } from "socket.io-client";
+// let socket;
 
 // component to show online users
-export default function ShowUsersOnline() {
+export default function ShowUsersOnline({ user_id }) {
+    console.log(user_id);
     const users = useSelector((state) => state.usersOnline);
     const dispatch = useDispatch();
     useEffect(() => {
-        if (!socket) socket = io.connect();
-        socket.on("getUsersOnline", () => {
-            dispatch(loadUsersOnline());
+        // if (!socket) socket = io.connect();
+        socket.on("getUsersOnline", (rows) => {
+            console.log("getUsersOnline :", rows);
+            dispatch(loadUsersOnline(rows));
         });
         socket.on("getNewUsersOnline", ({ onlineUser }) => {
-            dispatch(newUsersOnline(onlineUser));
+            console.log("getNewUsersOnline :", onlineUser);
+            if (onlineUser.user_id !== user_id) {
+                dispatch(newUsersOnline(onlineUser));
+            } else {
+                return;
+            }
         });
         // ✅
         socket.on("removeOlineUser", ({ offlineUsers }) => {
@@ -36,9 +44,9 @@ export default function ShowUsersOnline() {
             socket.off("getNewUsersOnline");
             socket.off("removeOlineUser");
             socket.disconnect();
-            socket = null;
+            // socket = null;
         };
-    }, []);
+    }, [user_id]);
     return (
         <>
             <div className="users-online">USERS ONLINE</div>

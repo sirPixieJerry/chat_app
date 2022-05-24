@@ -1,7 +1,9 @@
 // setup reducer for online users
 export function usersOnlineReducer(usersOnline = [], action) {
     if (action.type == "loadUsersOnline") {
-        return (usersOnline = [...usersOnline]);
+        const data = action.payload.usersOnline.onlineUsers;
+        console.log(action.payload.usersOnline.onlineUser);
+        return (usersOnline = [...action.payload.usersOnline.onlineUser]);
     } else if (action.type == "newUsersOnline") {
         return (usersOnline = [...usersOnline, action.payload.newUsersOnline]);
     } else if (action.type == "removeUsersOffine") {

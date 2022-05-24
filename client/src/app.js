@@ -11,6 +11,7 @@ import RecentUsers from "./recent-users";
 import User from "./view-profile";
 import GloabalChat from "./chat";
 import ShowUsersOnline from "./users_online";
+import Socket from "./socket";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -76,6 +77,7 @@ export default class App extends Component {
             <>
                 <BrowserRouter>
                     <div className="div1">
+                        <Socket />
                         <Link to="/">
                             <img className="logo" src="/images/logo.png" />
                         </Link>
@@ -139,7 +141,7 @@ export default class App extends Component {
                         </Route>
                     </div>
                     <div className="div7">
-                        <ShowUsersOnline />
+                        <ShowUsersOnline user_id={this.state.id} />
                     </div>
                 </BrowserRouter>
             </>

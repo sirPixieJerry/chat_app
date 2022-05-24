@@ -40,6 +40,7 @@ const {
     storeChatMessage,
     getLastChatMessage,
     getOnlineUser,
+    getAllOnlineUsers,
 } = require("../sql/db");
 
 // SETUP SOCKET.IO ❌
@@ -276,43 +277,49 @@ const io = require("socket.io")(server, {
 });
 io.use((socket, next) => session(socket.request, socket.request.res, next));
 
+// server listening to chosen port
+server.listen(PORT, function () {
+    console.log(`I'm listening to ${PORT}...`);
+});
+
+let usersOnline = [];
 // sockets
 io.on("connection", function (socket) {
     const user_id = socket.request.session.id;
+    usersOnline.push(user_id);
+    console.log(usersOnline);
     console.log(`user ${user_id} is connected with the socket-id `, socket.id);
     getChat()
         .then((rows) => socket.emit("getChatHistory", { chatHistory: rows }))
         .catch((err) => console.log(err));
-    // get new online users
-    getOnlineUser(socket.request.session.id).then((rows) => {
-        console.log(rows);
-        io.emit("getNewUsersOnline", { onlineUser: rows });
-    });
-    // get all online users socket emit getUsersOnline
-    getOnlineUser(socket.request.session.id).then((rows) => {
-        console.log(rows);
-        socket.emit("getUsersOnline", { onlineUser: rows });
-    });
     socket.on("newMessage", ({ newMessage }) => {
         const user_id = socket.request.session.id;
         storeChatMessage(user_id, newMessage).then(() => {
             getLastChatMessage().then((rows) => {
-                console.log(rows);
                 io.emit("storedMessage", rows);
             });
         });
+    });
+    // get new online users
+
+    getOnlineUser(socket.request.session.id).then((rows) => {
+        io.emit("getNewUsersOnline", { onlineUser: rows });
+    });
+    // get all online users socket emit getUsersOnline
+    getAllOnlineUsers(usersOnline).then((rows) => {
+        console.log(rows);
+        socket.emit("getUsersOnline", { onlineUser: rows });
     });
     socket.on("disconnect", () => {
         // remove disconnected user ✅
         io.emit("removeOlineUser", {
             offlineUsers: socket.request.session.id,
         });
-
-        console.log("user disconnected");
+        console.log("FILTERED: ", usersOnline);
+        console.log(`user ${socket.request.session.id} disconnected`);
+        usersOnline = usersOnline.filter(
+            (x) => x !== socket.request.session.id
+        );
+        console.log("FILTERED: ", usersOnline);
     });
-});
-
-// server listening to chosen port
-server.listen(PORT, function () {
-    console.log(`I'm listening to ${PORT}...`);
 });

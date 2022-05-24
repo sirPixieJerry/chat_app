@@ -239,6 +239,17 @@ function getOnlineUser(user_id) {
         .then((result) => result.rows[0]);
 }
 
+function getAllOnlineUsers(arr) {
+    return db
+        .query(
+            `SELECT id AS user_id, first_name, last_name, profile_picture_url
+        FROM users 
+        WHERE id = ANY($1)`,
+            [arr]
+        )
+        .then((result) => result.rows);
+}
+
 module.exports = {
     loginUser,
     addUser,
@@ -256,4 +267,5 @@ module.exports = {
     storeChatMessage,
     getLastChatMessage,
     getOnlineUser,
+    getAllOnlineUsers,
 };

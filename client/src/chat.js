@@ -4,13 +4,16 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 // import components from files:
 import Avatar from "./avatar";
+
+import { socket } from "./socket";
+
 // connect to redux
 import { useDispatch, useSelector } from "react-redux";
 import { loadChat, addChatMessage } from "./redux/global_chat/slice";
 
 // connect to socket.io
-import { io } from "socket.io-client";
-let socket;
+// import { io } from "socket.io-client";
+// let socket;
 
 export default function GloabalChat() {
     let [message, setMessage] = useState("");
@@ -19,7 +22,7 @@ export default function GloabalChat() {
     const dispatch = useDispatch();
     const messages = useSelector((state) => state.globalChat);
     useEffect(() => {
-        if (!socket) socket = io.connect();
+        // if (!socket) socket = io.connect();
         socket.on("getChatHistory", ({ chatHistory }) =>
             dispatch(loadChat(chatHistory))
         );
@@ -30,8 +33,8 @@ export default function GloabalChat() {
         return () => {
             socket.off("getChatHistory");
             socket.off("newMessage");
-            socket.disconnect();
-            socket = null;
+            // socket.disconnect();
+            // socket = null;
         };
     }, []);
     useEffect(() => {

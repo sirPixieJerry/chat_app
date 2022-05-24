@@ -16,13 +16,13 @@ fetch("/user/id.json")
     .then((res) => res.json())
     .then((user_id) => {
         if (!user_id) {
-            ReactDOM.render(<Welcome />, document.getElementById("#container"));
+            ReactDOM.render(<Welcome />, document.getElementById("container"));
         } else {
             ReactDOM.render(
                 <Provider store={store}>
                     <App />
                 </Provider>,
-                document.querySelector("#container")
+                document.getElementById("container")
             );
         }
     })
