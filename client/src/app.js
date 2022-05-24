@@ -10,6 +10,7 @@ import UserSearch from "./findpeople";
 import RecentUsers from "./recent-users";
 import User from "./view-profile";
 import GloabalChat from "./chat";
+import ShowUsersOnline from "./users_online";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -137,7 +138,9 @@ export default class App extends Component {
                             <User />
                         </Route>
                     </div>
-                    <div className="div7"></div>
+                    <div className="div7">
+                        <ShowUsersOnline />
+                    </div>
                 </BrowserRouter>
             </>
         );

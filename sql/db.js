@@ -227,6 +227,18 @@ function getLastChatMessage() {
         .then((result) => result.rows[0]);
 }
 
+// get online user info
+function getOnlineUser(user_id) {
+    return db
+        .query(
+            `SELECT id AS user_id, first_name, last_name, profile_picture_url
+        FROM users
+        WHERE id = $1`,
+            [user_id]
+        )
+        .then((result) => result.rows[0]);
+}
+
 module.exports = {
     loginUser,
     addUser,
@@ -243,4 +255,5 @@ module.exports = {
     getChat,
     storeChatMessage,
     getLastChatMessage,
+    getOnlineUser,
 };

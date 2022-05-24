@@ -102,7 +102,6 @@ export default function GloabalChat() {
                         })}
                     <div ref={lastMessage} />
                 </div>
-
                 <div className="chat-input">
                     <form onSubmit={handleSubmit}>
                         <input

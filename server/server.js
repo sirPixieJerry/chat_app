@@ -39,6 +39,7 @@ const {
     getChat,
     storeChatMessage,
     getLastChatMessage,
+    getOnlineUser,
 } = require("../sql/db");
 
 // SETUP SOCKET.IO ❌
@@ -282,7 +283,16 @@ io.on("connection", function (socket) {
     getChat()
         .then((rows) => socket.emit("getChatHistory", { chatHistory: rows }))
         .catch((err) => console.log(err));
-
+    // get new online users
+    getOnlineUser(socket.request.session.id).then((rows) => {
+        console.log(rows);
+        io.emit("getNewUsersOnline", { onlineUser: rows });
+    });
+    // get all online users socket emit getUsersOnline
+    getOnlineUser(socket.request.session.id).then((rows) => {
+        console.log(rows);
+        socket.emit("getUsersOnline", { onlineUser: rows });
+    });
     socket.on("newMessage", ({ newMessage }) => {
         const user_id = socket.request.session.id;
         storeChatMessage(user_id, newMessage).then(() => {
@@ -293,6 +303,11 @@ io.on("connection", function (socket) {
         });
     });
     socket.on("disconnect", () => {
+        // remove disconnected user ✅
+        io.emit("removeOlineUser", {
+            offlineUsers: socket.request.session.id,
+        });
+
         console.log("user disconnected");
     });
 });

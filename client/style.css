@@ -11,6 +11,21 @@ body {
     font-family: "Roboto", sans-serif;
     color: whitesmoke;
 }
+
+.users-online {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-online {
+    display: flex;
+}
+
+.user-online img {
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+}
 /* ❌ */
 #container {
     position: fixed;
@@ -122,7 +137,6 @@ body {
     border-radius: 15px;
     background-color: olivedrab;
 }
-/* ❌ */
 
 .searchbar {
     display: flex;
@@ -131,10 +145,20 @@ body {
     width: 60%;
 }
 
+.usersearch input {
+    background-color: rgb(66, 70, 78);
+    width: calc(100% - 32px);
+    height: auto;
+    padding: 8px;
+    margin: 0 0px 0px 24px;
+    border: 0;
+    border-radius: 5px;
+}
+
+/* ❌ */
+
 .usersearch {
-    position: absolute;
-    top: 20px;
-    width: 400px;
+    width: calc(100% - 240px);
     display: flex;
     flex-direction: column;
 }
@@ -354,6 +378,7 @@ footer {
 }
 
 #message-input {
+    background-color: rgb(66, 70, 78);
     width: calc(100% - 32px);
     height: auto;
     padding: 14px;
@@ -363,7 +388,6 @@ footer {
 }
 
 #message-input:focus {
-    background-color: rgb(66, 70, 78);
     border: none;
     outline: none;
 }
