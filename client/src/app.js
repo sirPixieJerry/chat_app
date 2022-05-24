@@ -74,64 +74,70 @@ export default class App extends Component {
         return (
             <>
                 <BrowserRouter>
-                    <header>
-                        <div className="logo-section">
-                            <Link to="/">
-                                <img className="logo" src="/images/logo.png" />
-                            </Link>
-                        </div>
-                        <div className="searchbar">
-                            <UserSearch />
-                        </div>
-                        <nav>
-                            <Link to="/profile">
+                    <div className="div1">
+                        <Link to="/">
+                            <img className="logo" src="/images/logo.png" />
+                        </Link>
+                    </div>
+                    <div className="div2"></div>
+                    <div className="div3">
+                        <RecentUsers />
+                    </div>
+                    <div className="div4">
+                        <Link to="/profile">
+                            <div className="profile">
                                 <Avatar
                                     className="avatar-small"
                                     profile_picture_url={
                                         this.state.profile_picture_url
                                     }
                                 />
-                            </Link>
-                            <Link to="/requests" className="custom-button">
-                                <img src="/images/addfriend-96.png" />
-                            </Link>
-                            {this.state.showModal && (
-                                <AvatarUpload
-                                    closeModal={this.closeModal}
-                                    onUpload={this.onUpload}
-                                />
-                            )}
-                            <Logout />
-                        </nav>
-                    </header>
-                    <main>
-                        <div className="sidebar-container-left"></div>
-                        <div className="content-container">
-                            <Route exact path="/">
-                                {/* <RecentUsers /> */}
-                                {this.state.showUserSearch && <UserSearch />}
-                                <GloabalChat user_id={this.state.id} />
-                            </Route>
-                            <Route exact path="/profile">
-                                <UserProfile
-                                    updateBio={this.updateBio}
-                                    profile_picture_url={
-                                        this.state.profile_picture_url
-                                    }
-                                    onProfileClick={this.onProfileClick}
-                                    first_name={this.state.first_name}
-                                    last_name={this.state.last_name}
-                                    bio={this.state.bio}
-                                    user_id={this.state.id}
-                                />
-                            </Route>
-                            <Route exact path="/requests"></Route>
-                            <Route exact path="/user/:user_id">
-                                <User />
-                            </Route>
-                        </div>
-                        <div className="sidebar-container-right"></div>
-                    </main>
+
+                                <p>
+                                    {this.state.first_name}{" "}
+                                    {this.state.last_name}
+                                </p>
+                            </div>{" "}
+                        </Link>
+                    </div>
+                    <div className="div5">
+                        <UserSearch />
+                        <Link to="/requests" className="custom-button">
+                            <img src="/images/addfriend-96.png" />
+                        </Link>
+                        {this.state.showModal && (
+                            <AvatarUpload
+                                closeModal={this.closeModal}
+                                onUpload={this.onUpload}
+                            />
+                        )}
+                        <Logout />
+                    </div>
+                    <div className="div6">
+                        <Route exact path="/">
+                            {/* <RecentUsers /> */}
+                            {this.state.showUserSearch && <UserSearch />}
+                            <GloabalChat user_id={this.state.id} />
+                        </Route>
+                        <Route exact path="/profile">
+                            <UserProfile
+                                updateBio={this.updateBio}
+                                profile_picture_url={
+                                    this.state.profile_picture_url
+                                }
+                                onProfileClick={this.onProfileClick}
+                                first_name={this.state.first_name}
+                                last_name={this.state.last_name}
+                                bio={this.state.bio}
+                                user_id={this.state.id}
+                            />
+                        </Route>
+                        <Route exact path="/requests"></Route>
+                        <Route exact path="/user/:user_id">
+                            <User />
+                        </Route>
+                    </div>
+                    <div className="div7"></div>
                 </BrowserRouter>
             </>
         );

@@ -53,7 +53,8 @@ export default function GloabalChat() {
     }
     function formatDate(timestamp) {
         const date = new Date(timestamp);
-        return `${date.toLocaleDateString()} @ ${date.toLocaleTimeString()}`;
+        return `${date.toLocaleDateString()}`;
+        //  @ ${date.toLocaleTimeString()}
     }
     // function formatTimestamp(timestamp) {
     //     const date = new Date(timestamp);
@@ -61,55 +62,59 @@ export default function GloabalChat() {
     // }
     return (
         <>
-            <div>
-                <h3>GLOBAL CHAT</h3>
-            </div>
             <div className="chat-box">
-                {messages &&
-                    messages.map((message) => {
-                        // const timer = message.created_at;
-                        // const time = formatTimestamp(timer);
-                        return (
-                            <div key={message.id} className="chat-message">
-                                <div>
-                                    <Avatar
-                                        className="avatar-chat"
-                                        profile_picture_url={
-                                            message.profile_picture_url
-                                        }
-                                    />
-                                </div>
-                                <div>
+                <div className="chat">
+                    {messages &&
+                        messages.map((message) => {
+                            // const timer = message.created_at;
+                            // const time = formatTimestamp(timer);
+                            return (
+                                <div key={message.id} className="chat-message">
+                                    <Link to={`/user/${message.sender_id}`}>
+                                        <Avatar
+                                            className="avatar-chat"
+                                            profile_picture_url={
+                                                message.profile_picture_url
+                                            }
+                                        />
+                                    </Link>
                                     <div>
-                                        <p className="chat-name">
-                                            {message.first_name}{" "}
-                                            {message.last_name}
-                                        </p>
-                                        <time>
-                                            {formatDate(message.created_at)}
-                                        </time>
-                                    </div>
-                                    <div>
-                                        <p>{message.text}</p>
+                                        <div className="chat-name">
+                                            <Link
+                                                to={`/user/${message.sender_id}`}
+                                            >
+                                                {message.first_name}{" "}
+                                                {message.last_name}
+                                            </Link>
+                                            <time>
+                                                {`\xa0\xa0\xa0`}
+                                                {formatDate(message.created_at)}
+                                            </time>
+                                        </div>
+                                        <div>
+                                            <p className="message">
+                                                {message.text}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                <div ref={lastMessage} />
-            </div>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="chat"
-                        placeholder="enter chat message here..."
-                        id="message-input"
-                        ref={input}
-                        onChange={handleChange}
-                    />
-                    <button>SUBMIT</button>
-                </form>
+                            );
+                        })}
+                    <div ref={lastMessage} />
+                </div>
+
+                <div className="chat-input">
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            name="chat"
+                            placeholder="message to #global chat"
+                            id="message-input"
+                            ref={input}
+                            onChange={handleChange}
+                        />
+                    </form>
+                </div>
             </div>
         </>
     );
