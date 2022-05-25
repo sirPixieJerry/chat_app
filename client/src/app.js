@@ -12,6 +12,7 @@ import User from "./view-profile";
 import GloabalChat from "./chat";
 import ShowUsersOnline from "./users_online";
 import Socket from "./socket";
+import ShowFriends from "./friends";
 
 // create class cmponent called App and export it
 export default class App extends Component {
@@ -109,6 +110,10 @@ export default class App extends Component {
                                 <p>general-chat</p>
                             </div>
                         </Route>
+                        <Route exact path="/friends">
+                            <ShowFriends user_id={this.state.id} />
+                        </Route>
+
                         {/* <RecentUsers /> */}
                     </div>
                     {/* <div className="div4"></div> */}
