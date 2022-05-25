@@ -49,18 +49,25 @@ export default function ShowUsersOnline({ user_id }) {
     }, [user_id]);
     return (
         <>
-            <div className="users-online">USERS ONLINE</div>
+            <div className="users-online">
+                <p>USERS ONLINE</p>
+                <hr />
+            </div>
             {users &&
                 users.map((user) => {
                     return (
-                        <div className="user-online" key={user.user_id}>
+                        <Link
+                            className="user-online"
+                            key={user.user_id}
+                            to={`/user/${user.user_id}`}
+                        >
                             <Avatar
                                 profile_picture_url={user.profile_picture_url}
                             />
                             <p>
                                 {user.first_name} {user.last_name}
                             </p>
-                        </div>
+                        </Link>
                     );
                 })}
         </>

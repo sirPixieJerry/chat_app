@@ -13,7 +13,7 @@ export default class Logout extends Component {
     render() {
         return (
             <div className="custom-button" onClick={this.handleLogout}>
-                <img src="/images/logout-64.png" />
+                <img src="/images/logout.png" />
             </div>
         );
     }

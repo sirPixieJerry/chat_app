@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import Avatar from "./avatar";
 import AddFriend from "./add-friend";
+import { Link } from "react-router-dom";
 
 export default function User() {
     const [user, setUser] = useState([]);
@@ -19,21 +20,30 @@ export default function User() {
     }, [user_id]);
     return (
         <>
-            <h1>USER PROFILE OTHER USER</h1>{" "}
-            {error && <h2>user does not exist</h2>}
-            <div className="profile-header">
-                <Avatar
-                    className="avatar-big"
-                    profile_picture_url={user.profile_picture_url}
-                />
-                <div>
-                    <p>
-                        {user.first_name} {user.last_name}
-                    </p>
-                    <p>{user.bio}</p>
+            <div className="blackbox">
+                <div className="profile">
+                    <Link to="/">
+                        <div className="esc">
+                            <img src="/images/esc.png" />
+                        </div>
+                    </Link>
+                    {error && <h2>user does not exist</h2>}
+                    <div className="profile-header"></div>
+                    <div className="profile-main">
+                        <Avatar
+                            className="avatar-big"
+                            profile_picture_url={user.profile_picture_url}
+                        />
+                        <div>
+                            <p>
+                                {user.first_name} {user.last_name}
+                            </p>
+                            <p>{user.bio}</p>
+                        </div>
+                        {<AddFriend user_id={user_id} />}
+                        <p></p>
+                    </div>
                 </div>
-                {<AddFriend user_id={user_id} />}
-                <p></p>
             </div>
         </>
     );

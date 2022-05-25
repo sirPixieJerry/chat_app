@@ -46,49 +46,58 @@ export default class Registration extends Component {
     render() {
         return (
             <>
-                <h1>Registration Component</h1>
-                {this.state.error && <p>Oops, something went wrong!</p>}
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        onChange={this.handleChange}
-                        type="text"
-                        name="first_name"
-                        placeholder="First Name"
-                        required
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="text"
-                        name="last_name"
-                        placeholder="Last Name"
-                        required
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="email"
-                        name="email"
-                        placeholder="Email Address"
-                        required
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="password"
-                        name="password_repeat"
-                        placeholder="Password"
-                        required
-                    />
-                    <button>Submit</button>
-                </form>
-                <p>
-                    Click <Link to="/login">here</Link> to login!
-                </p>
+                <div className="blackbox">
+                    <div className="profile">
+                        <h1>TOXICHAT</h1>
+                        {this.state.error && <p>Oops, something went wrong!</p>}
+                        <form onSubmit={this.handleSubmit}>
+                            <input
+                                onChange={this.handleChange}
+                                type="text"
+                                className="message-input"
+                                name="first_name"
+                                placeholder="First Name"
+                                required
+                            />
+                            <input
+                                onChange={this.handleChange}
+                                type="text"
+                                className="message-input"
+                                name="last_name"
+                                placeholder="Last Name"
+                                required
+                            />
+                            <input
+                                onChange={this.handleChange}
+                                type="email"
+                                className="message-input"
+                                name="email"
+                                placeholder="Email Address"
+                                required
+                            />
+                            <input
+                                onChange={this.handleChange}
+                                type="password"
+                                className="message-input"
+                                name="password"
+                                placeholder="Password"
+                                required
+                            />
+                            <input
+                                onChange={this.handleChange}
+                                type="password"
+                                className="message-input"
+                                name="password_repeat"
+                                placeholder="Password"
+                                required
+                            />
+                            <button>Submit</button>
+                        </form>
+                        <p>
+                            Click <Link to="/login">here</Link> to login!
+                        </p>
+                    </div>
+                </div>
             </>
         );
     }

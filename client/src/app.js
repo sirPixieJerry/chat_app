@@ -81,46 +81,44 @@ export default class App extends Component {
                         <Link to="/">
                             <img className="logo" src="/images/logo.png" />
                         </Link>
-                    </div>
-                    <div className="div2"></div>
-                    <div className="div3">
-                        <RecentUsers />
-                    </div>
-                    <div className="div4">
                         <Link to="/profile">
-                            <div className="profile">
-                                <Avatar
-                                    className="avatar-small"
-                                    profile_picture_url={
-                                        this.state.profile_picture_url
-                                    }
-                                />
-
-                                <p>
-                                    {this.state.first_name}{" "}
-                                    {this.state.last_name}
-                                </p>
-                            </div>{" "}
-                        </Link>
-                    </div>
-                    <div className="div5">
-                        <UserSearch />
-                        <Link to="/requests" className="custom-button">
-                            <img src="/images/addfriend-96.png" />
-                        </Link>
-                        {this.state.showModal && (
-                            <AvatarUpload
-                                closeModal={this.closeModal}
-                                onUpload={this.onUpload}
+                            <Avatar
+                                className="avatar-small"
+                                profile_picture_url={
+                                    this.state.profile_picture_url
+                                }
                             />
-                        )}
+                        </Link>
+                        <Link to="/friends">
+                            <img className="logo" src="/images/friends.png" />
+                        </Link>
                         <Logout />
                     </div>
-                    <div className="div6">
+                    <div className="div2">
                         <Route exact path="/">
-                            {/* <RecentUsers /> */}
-                            {this.state.showUserSearch && <UserSearch />}
-                            <GloabalChat user_id={this.state.id} />
+                            <h3>Global Chat</h3>
+                        </Route>
+                        <Route exact path="/friends">
+                            <h3>Friends</h3>
+                        </Route>
+                    </div>
+                    <div className="div3">
+                        <Route exact path="/">
+                            <div className="chat-room">
+                                <img src="/images/hash.png" />
+                                <p>general-chat</p>
+                            </div>
+                        </Route>
+                        {/* <RecentUsers /> */}
+                    </div>
+                    {/* <div className="div4"></div> */}
+                    <div className="div5">
+                        {/* <UserSearch /> */}
+                        {/* <Link to="/requests" className="custom-button">
+                            <img src="/images/addfriend-96.png" />
+                        </Link> */}
+                        <Route exact path="/friends">
+                            <UserSearch />
                         </Route>
                         <Route exact path="/profile">
                             <UserProfile
@@ -135,7 +133,23 @@ export default class App extends Component {
                                 user_id={this.state.id}
                             />
                         </Route>
-                        <Route exact path="/requests"></Route>
+                        {this.state.showModal && (
+                            <AvatarUpload
+                                closeModal={this.closeModal}
+                                onUpload={this.onUpload}
+                            />
+                        )}
+                    </div>
+                    <div className="div6">
+                        <Route exact path="/">
+                            {/* <RecentUsers /> */}
+                            {this.state.showUserSearch && <UserSearch />}
+                            <GloabalChat user_id={this.state.id} />
+                        </Route>
+                        <Route exact path="/friends">
+                            <h3>Users recently joined</h3>
+                            <RecentUsers />
+                        </Route>
                         <Route exact path="/user/:user_id">
                             <User />
                         </Route>

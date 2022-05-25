@@ -59,18 +59,12 @@ export default function GloabalChat() {
         return `${date.toLocaleDateString()}`;
         //  @ ${date.toLocaleTimeString()}
     }
-    // function formatTimestamp(timestamp) {
-    //     const date = new Date(timestamp);
-    //     return `${date.toLocaleDateString()} at ${date.toLocaleTimeString}`;
-    // }
     return (
         <>
             <div className="chat-box">
                 <div className="chat">
                     {messages &&
                         messages.map((message) => {
-                            // const timer = message.created_at;
-                            // const time = formatTimestamp(timer);
                             return (
                                 <div key={message.id} className="chat-message">
                                     <Link to={`/user/${message.sender_id}`}>

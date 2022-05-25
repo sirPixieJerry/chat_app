@@ -48,16 +48,22 @@ body {
 }
 
 .div2 {
+    display: flex;
+    align-items: center;
     background-color: rgb(47, 49, 55);
     grid-column: 2 / 2;
     grid-row: 1 / 1;
     border-bottom: 1px solid rgb(27, 27, 27);
 }
 
+.div2 h3 {
+    margin-left: 17px;
+}
+
 .div3 {
     background-color: rgb(47, 49, 55);
     grid-column: 2 / 2;
-    grid-row: 2 / 3;
+    grid-row: 2 / 4;
 }
 
 .div4 {
@@ -66,20 +72,6 @@ body {
     background-color: rgb(35, 36, 40);
     grid-column: 2 / 2;
     grid-row: 3 / 4;
-}
-
-.profile {
-    display: flex;
-    align-items: center;
-    border-radius: 3px;
-    width: auto;
-    margin: 10px 10px 10px 7px;
-    padding-left: 3px;
-    padding-right: 10px;
-}
-
-.profile:hover {
-    background-color: rgb(54, 57, 67);
 }
 
 .div4 img {
@@ -150,9 +142,145 @@ body {
     width: calc(100% - 32px);
     height: auto;
     padding: 8px;
-    margin: 0 0px 0px 24px;
+    margin: 10px 0px 0px 24px;
     border: 0;
     border-radius: 5px;
+}
+
+.avatar-small {
+    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+    transition: 200ms;
+}
+
+.avatar-small:hover {
+    border-radius: 15px;
+}
+
+.chat-room {
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.chat-room:hover {
+    background-color: rgb(66, 70, 78);
+}
+
+.chat-room img {
+    width: 16px;
+    height: 16px;
+    margin-left: 7px;
+}
+
+.chat-room p {
+    margin-left: 5px;
+}
+
+.user-online {
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-online:hover {
+    background-color: rgb(66, 70, 78);
+}
+
+.user-online img {
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+}
+
+.user-online p {
+    color: whitesmoke;
+    margin-left: 5px;
+}
+
+.blackbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile {
+    width: 360px;
+    height: 480px;
+    background-color: rgb(66, 70, 78);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile h1 {
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+.profile p {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.profile-header {
+    background-color: darkolivegreen;
+    width: 360px;
+    height: 100px;
+}
+
+.profile-main {
+    width: 360px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-main h2 {
+    margin: 0;
+}
+
+.profile-main p {
+    margin: 20px 5px 20px 5px;
+}
+
+.avatar-big {
+    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
+    height: 180px;
+    width: 180px;
+    border-radius: 90px;
+    transform: translate(0px, -30px);
+}
+
+.esc {
+    position: fixed;
+    top: 25px;
+    left: calc(100% - 50px);
+    background-color: whitesmoke;
+    height: 24px;
+    width: 24px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.esc img {
+    height: 14px;
+    width: 14px;
 }
 
 /* ❌ */
@@ -210,19 +338,43 @@ main {
 
 .recent-users {
     width: 100%;
-    height: 100px;
+    height: 100%;
     display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.div6 h3 {
+    margin-left: 10px;
 }
 
 .recent-user {
-    width: 25%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 10px 0 10px 0;
+}
+
+.recent-user:hover {
+    background-color: rgb(37, 38, 42);
+}
+
+.recent-user p {
+    color: whitesmoke;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.recent-users hr {
+    border: 1px solid darkgray;
+    width: 90%;
 }
 
 .recent-user img {
-    width: 97%;
-    height: 97%;
-    border-radius: 5px;
-    margin: 2px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin-left: 12px;
     object-fit: cover;
     object-position: left top;
 }
@@ -247,22 +399,9 @@ footer {
     color: burlywood;
 }
 
-.avatar-small {
-    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
-    border-radius: 5px;
-    height: 40px;
-    width: 40px;
-}
-
 .avatar-user-search {
     height: 60px;
     width: 60px;
-}
-
-.avatar-big {
-    background-image: url(https://imageboard-spiced.s3.eu-central-1.amazonaws.com/7YJqwX-73OQymo6uXEZCt719xcS_38_u.png);
-    height: 200px;
-    width: 200px;
 }
 
 .blackbox {
@@ -278,18 +417,24 @@ footer {
 }
 
 .custom-button {
+    margin-top: 12px;
+    width: 46px;
+    height: 46px;
+    border-radius: 23px;
+    background-color: darkgray;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 40px;
-    border-radius: 5px;
-    background-color: cornflowerblue;
+    transition: 200ms;
+}
+
+.custom-button:hover {
+    border-radius: 15px;
+    background-color: olivedrab;
 }
 
 .custom-button img {
-    width: 30px;
-    height: 30px;
+    width: 46px;
+    height: 46px;
 }
 
 .friend-list {
@@ -361,6 +506,22 @@ footer {
     color: gray;
 }
 
+.users-online {
+    display: flex;
+    align-items: center;
+}
+
+.users-online p {
+    font-size: small;
+    color: gray;
+    margin-bottom: 4px;
+}
+
+.users-online hr {
+    width: 80%;
+    border: 1px solid gray;
+}
+
 .message {
     /* font-weight: 10; */
     margin: 10px 0 3px 0;
@@ -387,7 +548,33 @@ footer {
     border-radius: 5px;
 }
 
+.message-input {
+    background-color: rgb(99, 105, 118);
+
+    width: calc(100% - 32px);
+    height: auto;
+    padding: 14px;
+    margin: 0 12px 24px 12px;
+    border: 0;
+    border-radius: 5px;
+}
+
+.message-input:focus {
+    border: none;
+    outline: none;
+}
+
+.message-input::placeholder {
+    color: whitesmoke;
+}
+
 #message-input:focus {
     border: none;
     outline: none;
+}
+
+.profile form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

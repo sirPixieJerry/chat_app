@@ -17,16 +17,24 @@ export default function RecentUsers() {
             <div className="recent-users">
                 {userData.map((user) => {
                     return (
-                        <Link
-                            to={`/user/${user.id}`}
-                            key={user.id}
-                            className="recent-user"
-                        >
-                            <Avatar
-                                profile_picture_url={user.profile_picture_url}
+                        <>
+                            <hr />
+                            <Link
+                                to={`/user/${user.id}`}
                                 key={user.id}
-                            />
-                        </Link>
+                                className="recent-user"
+                            >
+                                <Avatar
+                                    profile_picture_url={
+                                        user.profile_picture_url
+                                    }
+                                    key={user.id}
+                                />
+                                <p>
+                                    {user.first_name} {user.last_name}
+                                </p>
+                            </Link>
+                        </>
                     );
                 })}
             </div>

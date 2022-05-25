@@ -47,31 +47,45 @@ export default class Login extends Component {
     render() {
         return (
             <>
-                <h1>LOGIN COMPONENT:</h1>
-                {this.state.error && <p>Oops, something went wrong!</p>}
-                <form onSubmit={this.handleLogin}>
-                    <input
-                        onChange={this.handleChange}
-                        type="email"
-                        name="email"
-                        placeholder="Enter your Email..."
-                        required
-                    />
-                    <input
-                        onChange={this.handleChange}
-                        type="password"
-                        name="password"
-                        placeholder="Enter Password"
-                        required
-                    />
-                    <button>SUBMIT</button>
-                </form>
-                <p>
-                    Click <Link to="/">here</Link> to register!
-                </p>
-                <p>
-                    Reset Password <Link to="/reset-password">here</Link>!
-                </p>
+                <div className="blackbox">
+                    <div className="profile">
+                        <h1>WELCOME TO</h1>
+                        <h1>TOXICHAT</h1>
+                        <p>
+                            The chat app for toxic chatters all over the world
+                            and beyond!
+                        </p>
+                        {this.state.error && <p>Oops, something went wrong!</p>}
+
+                        <form onSubmit={this.handleLogin}>
+                            <input
+                                onChange={this.handleChange}
+                                type="email"
+                                name="email"
+                                className="message-input"
+                                placeholder="Enter your Email..."
+                                required
+                            />
+                            <input
+                                onChange={this.handleChange}
+                                type="password"
+                                name="password"
+                                className="message-input"
+                                placeholder="Enter Password"
+                                required
+                            />
+                            <button>SUBMIT</button>
+                        </form>
+
+                        <p>
+                            Click <Link to="/">here</Link> to register!
+                        </p>
+                        <p>
+                            Reset Password{" "}
+                            <Link to="/reset-password">here</Link>!
+                        </p>
+                    </div>
+                </div>
             </>
         );
     }
