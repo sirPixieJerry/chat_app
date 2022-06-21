@@ -30,6 +30,7 @@ A live demo on Heroku is currently not available.
 -   [ ] feature to create threads from chat messages
 -   [ ] feature to react with emojis to chat messages
 -   [ ] feature to post pictures and links to the chat
+-   [ ] feature to edit chat messages
 -   [ ] private chat
 -   [ ] create the possibility to join or leave chat servers
 -   [ ] create chat server and chat rooms
